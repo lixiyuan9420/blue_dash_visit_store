@@ -20,11 +20,11 @@ def __extract_store_record(data_json) -> StoreRecord:
     part = data["部门"]
     sale_name = data["成员"]
     if book_time == 'null':
-        book_time = None
+        book_time = '0000-00-00'
     if time == 'null':
-        time = None
+        time = '0000-00-00'
     if next_time == 'null':
-        next_time = None
+        next_time = '0000-00-00'
     return StoreRecord(is_book,book_time,sale_id,goal,store,store_name,
                        store_phone_name,store_phone,store_address,time,result,
                        next_time,part,sale_name)
