@@ -19,6 +19,8 @@ def __extract_store_record(data_json) -> StoreRecord:
     next_time = data["下次拜访日期"]
     part = data["部门"]
     sale_name = data["成员"]
+
+
     return StoreRecord(is_book,book_time,sale_id,goal,store,store_name,
                        store_phone_name,store_phone,store_address,time,result,
                        next_time,part,sale_name)
