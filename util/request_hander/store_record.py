@@ -1,5 +1,3 @@
-from typing import List
-
 from db.operation.store import StoreRecord
 
 
@@ -9,7 +7,8 @@ def __extract_store_record(data_json) -> StoreRecord:
     book_time = data["预约日期"]
     sale_id = data["销售编号"]
     goal = data["拜访目的"]
-    store = data["`门店/经销商`"]
+    store = data["`门店`"]
+    sales = data["`经销商`"]
     store_name = data["`门店/经销商名称`"]
     store_phone_name = data["`门店/经销商联系人名称`"]
     store_phone = data["`门店/经销商电话`"]
@@ -25,6 +24,6 @@ def __extract_store_record(data_json) -> StoreRecord:
         time = '0001-01-01'
     if next_time == 'null':
         next_time = '0001-01-01'
-    return StoreRecord(is_book,book_time,sale_id,goal,store,store_name,
-                       store_phone_name,store_phone,store_address,time,result,
-                       next_time,part,sale_name)
+    return StoreRecord(is_book, book_time, sale_id, goal, store, sales, store_name,
+                       store_phone_name, store_phone, store_address, time, result,
+                       next_time, part, sale_name)

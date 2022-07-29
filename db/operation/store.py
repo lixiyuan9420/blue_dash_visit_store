@@ -1,10 +1,11 @@
 # create table `门店拜访记录` (
 #         id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-#         `是否预约` varchar(5)
+#         `是否预约` varchar(5),
 #         `预约日期` Date,
 #         `销售编号` varchar(20),
 #         `拜访目的` varchar(20),
-#         `门店/经销商` varchar(60),
+#         `门店` varchar(60),
+#         `经销商` varchar(60),
 #         `门店/经销商名称` varchar(60),
 #         `门店/经销商联系人名称` varchar(20),
 #         `门店/经销商电话` varchar(60),
@@ -29,7 +30,8 @@ class StoreRecord:
         book_time:预约日期
         sale_id:销售编号
         goal:拜访目的
-        store:门店/经销商
+        store:门店
+        sales:经销商
         store_name:门店/经销商名称
         store_phone_name:门店/经销商联系人名称
         store_phone:门店/经销商电话
@@ -43,15 +45,17 @@ class StoreRecord:
     """
 
     def __init__(self, is_book: str, book_time: Date, sale_id: str, goal: str,
-                 store: str, store_name: str, store_phone_name: str, store_phone: str,
-                 store_address: str, time: Date, result: str, next_time: Date, part: str, sale_name: str,data_id:int = -1):
+                 store: str, sales: str, store_name: str, store_phone_name: str, store_phone: str,
+                 store_address: str, time: Date, result: str, next_time: Date, part: str, sale_name: str,
+                 data_id: int = -1):
         """
 
         :param is_book: 是否预约
         :param book_time: 预约日期
         :param sale_id: 销售编号
         :param goal: 拜访目的
-        :param store: 门店/经销商
+        :param store: 门店
+        :param sales: 经销商
         :param store_name: 门店/经销商名称
         :param store_phone_name: 门店/经销商联系人名称
         :param store_phone: 门店/经销商电话
@@ -69,6 +73,7 @@ class StoreRecord:
         self.sale_id = sale_id
         self.goal = goal
         self.store = store
+        self.sales = sales
         self.store_name = store_name
         self.store_phone_name = store_phone_name
         self.store_phone = store_phone
@@ -80,10 +85,11 @@ class StoreRecord:
         self.sale_name = sale_name
         self.data_id = data_id
 
-    def generate_tuple(self) ->Tuple:
+    def generate_tuple(self) -> Tuple:
         """
 
         :return:
         """
-        return (self.is_book,self.book_time,self.sale_id,self.goal,self.store,self.store_name,self.store_phone_name,
-                self.store_phone,self.store_address,self.time,self.result,self.next_time,self.part,self.sale_name)
+        return (self.is_book, self.book_time, self.sale_id, self.goal, self.store, self.sales, self.store_name,
+                self.store_phone_name,
+                self.store_phone, self.store_address, self.time, self.result, self.next_time, self.part, self.sale_name)
