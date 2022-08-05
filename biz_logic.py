@@ -82,6 +82,7 @@ def new_store_contract() -> flask.wrappers.Response:
     try:
         infoLogger.log("/store/new_store_record 开始")
         new_record = __extract_store_record(request.get_json())
+        print(new_record.generate_tuple())
         infoLogger.log(request.get_json())
         success = store_sql.insert_store_contract(new_record)
         infoLogger.log("/store/new_store_record success: " + str(success), line_below=True)
