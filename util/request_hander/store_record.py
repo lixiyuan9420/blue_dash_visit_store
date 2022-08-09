@@ -57,9 +57,9 @@ def __extract_store_record(data_json) -> StoreRecord:
     if next_time != '0001-01-01':
         print(222)
         infoLogger.log("添加任务  下一次拜访时间"+str(next_time))
-        book_year = datetime.strptime(next_time, '%Y-%m-%d').year
-        book_month = datetime.strptime(next_time, '%Y-%m-%d').month
-        book_day = datetime.strptime(next_time, '%Y-%m-%d').day
+        book_year = datetime.strptime(next_time, '%Y-%m-%d-%H-%M-%S').year
+        book_month = datetime.strptime(next_time, '%Y-%m-%d-%H-%M-%S').month
+        book_day = datetime.strptime(next_time, '%Y-%m-%d-%H-%M-%S').day
         print(next_time,book_month,book_day)
         scheduler.add_job(func=send_message_book, id=str(next_time),
                           trigger='date', run_date=datetime(book_year, book_month, book_day, 16,45, 0))
