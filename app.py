@@ -20,7 +20,7 @@ app.register_blueprint(biz_logic.bp)
 def add_book_time(book_time,book_year,book_month,book_day):
     scheduler.add_job(func=send_message_book, id=str(book_time),
                       trigger='date', run_date=datetime(book_year, book_month, book_day,
-                                                        15, 20, 0))
+                                                        15, 38, 0))
 
 # 自动运行这个app
 if __name__ == '__main__':
