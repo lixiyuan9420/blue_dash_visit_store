@@ -26,4 +26,4 @@ def add_book_time(book_time,book_year,book_month,book_day):
 if __name__ == '__main__':
     scheduler.init_app(app=app)
     scheduler.start()
-    app.run(host='0.0.0.0',port=3397)
+    app.run(host='0.0.0.0',port=3392)
