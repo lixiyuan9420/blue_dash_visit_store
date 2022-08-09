@@ -47,14 +47,14 @@ def __extract_store_record(data_json) -> StoreRecord:
         book_day = datetime.strptime(book_time, '%Y-%m-%d').day
         infoLogger.log("添加"+str(book_time)+"任务已完成")
         scheduler.add_job(func=send_message_book, id=str(book_time),
-                          trigger='date', run_date=datetime(book_year, book_month, book_day,13, 55, 0))
+                          trigger='date', run_date=datetime(book_year, book_month, book_day,15, 25, 0))
     if next_time != '0001-01-01':
         infoLogger.log("添加任务  下一次拜访时间"+str(next_time))
         book_year = datetime.strptime(next_time, '%Y-%m-%d').year
         book_month = datetime.strptime(next_time, '%Y-%m-%d').month
         book_day = datetime.strptime(next_time, '%Y-%m-%d').day
         scheduler.add_job(func=send_message_book, id=str(next_time),
-                          trigger='date', run_date=datetime(book_year, book_month, book_day, 13, 55, 0))
+                          trigger='date', run_date=datetime(book_year, book_month, book_day, 15, 55, 0))
         infoLogger.log("添加"+str(next_time)+"任务已完成")
     return StoreRecord(is_book, book_time, sale_id, goal, store, sales, store_name,
                        store_phone_name, store_phone, store_address, time, result,
