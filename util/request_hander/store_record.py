@@ -44,8 +44,11 @@ def __extract_store_record(data_json) -> StoreRecord:
         infoLogger.log("添加任务  预约拜访时间"+str(book_time))
         print(222)
         book_year = datetime.strptime(book_time, '%Y-%m-%d').year
+        print(book_year)
         book_month = datetime.strptime(book_time, '%Y-%m-%d').month
+        print(book_month)
         book_day = datetime.strptime(book_time, '%Y-%m-%d').day
+        print(book_day)
         print(book_year,book_month,book_day)
         scheduler.add_job(func=send_message_book, id=str(book_time),
                           trigger='date', run_date=datetime(book_year, book_month, book_day,16, 45, 0))
