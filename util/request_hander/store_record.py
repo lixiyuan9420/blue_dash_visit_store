@@ -42,6 +42,7 @@ def __extract_store_record(data_json) -> StoreRecord:
     print("开始添加定时任务"+str(book_time)+str(next_time))
     if book_time != '0001-01-01':
         infoLogger.log("添加任务  预约拜访时间"+str(book_time))
+        print(222)
         book_year = datetime.strptime(book_time, '%Y-%m-%d').year
         book_month = datetime.strptime(book_time, '%Y-%m-%d').month
         book_day = datetime.strptime(book_time, '%Y-%m-%d').day
@@ -51,6 +52,7 @@ def __extract_store_record(data_json) -> StoreRecord:
         print(111)
         infoLogger.log("添加" + str(book_time) + "任务已完成")
     if next_time != '0001-01-01':
+        print(222)
         infoLogger.log("添加任务  下一次拜访时间"+str(next_time))
         book_year = datetime.strptime(next_time, '%Y-%m-%d').year
         book_month = datetime.strptime(next_time, '%Y-%m-%d').month
