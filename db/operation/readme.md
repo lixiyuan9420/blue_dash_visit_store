@@ -14,7 +14,7 @@ last updated 2022 - 6 - 29
         `预约日期` Date,
         `销售编号` varchar(20),
         `拜访目的` varchar(20),
-        `门店/经销商` varchar(60),
+        `门店经销商` varchar(60),
         `门店/经销商名称` varchar(60),
         `门店/经销商联系人名称` varchar(20),
         `门店/经销商电话` varchar(60),
@@ -24,5 +24,4 @@ last updated 2022 - 6 - 29
         `下次拜访日期` Date,
         `部门` varchar(20),
         `成员` varchar(20),
-        foreign key (`销售编号`) references `销售人员表`(`销售人员编号`)
     );

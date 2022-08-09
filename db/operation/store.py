@@ -6,7 +6,7 @@
 #         `拜访目的` varchar(20),
 #         `门店` varchar(60),
 #         `经销商` varchar(60),
-#         `门店/经销商名称` varchar(60),
+#         `门店经销商名称` varchar(60),
 #         `门店/经销商联系人名称` varchar(20),
 #         `门店/经销商电话` varchar(60),
 #         `门店/经销商地址` varchar(100),
@@ -15,7 +15,7 @@
 #         `下次拜访日期` Date,
 #         `部门` varchar(20),
 #         `成员` varchar(20)
-#     )
+#     );
 from typing import Tuple
 
 from pymysql import Date

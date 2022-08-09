@@ -1,5 +1,14 @@
+from datetime import datetime
+
 import requests
 import time
+
+from apscheduler.schedulers.background import BackgroundScheduler
+from flask import Flask
+from flask_apscheduler import APScheduler
+
+import biz_logic
+import config
 
 
 def get(url: str, **kwargs):
@@ -54,5 +63,36 @@ def get_ticket(id):
         return get_ticket(id)
 
 
-info = get_ticket("工单ID")
-print(info)
+scheduler = APScheduler(scheduler=BackgroundScheduler(timezone='Asia/Shanghai'))
+
+
+
+app = Flask(__name__)
+
+# 加载初始化设置
+app.config.from_object(config)
+
+# 登记蓝图，于是这个app可以作为一个web server生效
+app.register_blueprint(biz_logic.bp)
+
+def pr():
+    print(1)
+# 自动运行这个app
+if __name__ == '__main__':
+    book_time = '2022-8-9'
+    book_year = 0000,
+    book_month = 00
+    book_day = 00
+    if book_time != '0001-01-01':
+        book_year = datetime.strptime(book_time, '%Y-%m-%d').year
+        book_month = datetime.strptime(book_time, '%Y-%m-%d').month
+        book_day = datetime.strptime(book_time, '%Y-%m-%d').day
+    scheduler.add_job(func=pr, id=str(book_time),
+                      trigger='date', run_date=datetime(book_year, book_month, book_day,
+                                                        10, 29, 0))
+    scheduler.init_app(app=app)
+    scheduler.start()
+    app.run(host='0.0.0.0',port=3393)
+
+
+
