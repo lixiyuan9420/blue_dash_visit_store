@@ -43,11 +43,11 @@ def __extract_store_record(data_json) -> StoreRecord:
     if book_time != '0001-01-01':
         infoLogger.log("添加任务  预约拜访时间"+str(book_time))
         print(222)
-        book_year = datetime.strptime(book_time, '%Y-%m-%d').year
+        book_year = datetime.strptime(book_time, '%Y-%m-%d-%H-%M-%S').year
         print(book_year)
-        book_month = datetime.strptime(book_time, '%Y-%m-%d').month
+        book_month = datetime.strptime(book_time, '%Y-%m-%d-%H-%M-%S').month
         print(book_month)
-        book_day = datetime.strptime(book_time, '%Y-%m-%d').day
+        book_day = datetime.strptime(book_time, '%Y-%m-%d-%H-%M-%S').day
         print(book_day)
         print(book_year,book_month,book_day)
         scheduler.add_job(func=send_message_book, id=str(book_time),
