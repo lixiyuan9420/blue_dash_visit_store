@@ -92,7 +92,7 @@ def new_store_contract() -> flask.wrappers.Response:
 
 
 @bp.route("/store/query_is_exist", methods=["POST"])
-def new_store_contract() -> flask.wrappers.Response:
+def query_is_exist() -> flask.wrappers.Response:
     """
     插入一个新的门店合同。
 
