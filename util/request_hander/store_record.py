@@ -42,20 +42,13 @@ def __extract_store_record(data_json) -> StoreRecord:
     print("开始添加定时任务"+str(book_time)+str(next_time))
     if book_time != '0001-01-01':
         infoLogger.log("添加任务  预约拜访时间"+str(book_time))
-        print(222)
         book_year = datetime.strptime(book_time, '%Y-%m-%d %H:%M').year
-        print(book_year)
         book_month = datetime.strptime(book_time, '%Y-%m-%d %H:%M').month
-        print(book_month)
         book_day = datetime.strptime(book_time, '%Y-%m-%d %H:%M').day
-        print(book_day)
-        print(book_year,book_month,book_day)
         scheduler.add_job(func=send_message_book, id=str(book_time),
-                          trigger='date', run_date=datetime(book_year, book_month, book_day,13, 22, 0))
-        print(111)
+                          trigger='date', run_date=datetime(book_year, book_month, book_day,13, 45, 0))
         infoLogger.log("添加" + str(book_time) + "任务已完成")
     if next_time != '0001-01-01':
-        print(222)
         infoLogger.log("添加任务  下一次拜访时间"+str(next_time))
         book_year = datetime.strptime(next_time, '%Y-%m-%d %H:%M').year
         book_month = datetime.strptime(next_time, '%Y-%m-%d %H:%M').month
@@ -63,7 +56,6 @@ def __extract_store_record(data_json) -> StoreRecord:
         print(next_time,book_month,book_day)
         scheduler.add_job(func=send_message_book, id=str(next_time),
                           trigger='date', run_date=datetime(book_year, book_month, book_day,13, 22, 0))
-        print(111)
         infoLogger.log("添加"+str(next_time)+"任务已完成")
     return StoreRecord(is_book, book_time, sale_id, goal, store, sales, store_name,
                        store_phone_name, store_phone, store_address, time, result,
