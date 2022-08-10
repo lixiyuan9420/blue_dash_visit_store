@@ -3,14 +3,14 @@ from dbutils.pooled_db import PooledDB
 
 
 # 一些常量
-# mysql_username = "bluedash"
-mysql_username = "root"
+mysql_username = "bluedash"
+# mysql_username = "root"
 mysql_host_name = "localhost"
-# mysql_host_password = "BLUEYOUUP"
-mysql_host_password = "123"
+mysql_host_password = "BLUEYOUUP"
+# mysql_host_password = "123"
 mysql_port_number = 3306
-# mysql_database_name_1 = "总数据库"
-mysql_database_name_1 = "bluedash"
+mysql_database_name_1 = "总数据库"
+# mysql_database_name_1 = "bluedash"
 
 # 连接池
 Pool = PooledDB(
