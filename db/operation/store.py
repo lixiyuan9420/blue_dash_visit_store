@@ -32,7 +32,7 @@ class StoreRecord:
         goal:拜访目的
         store:门店
         sales:经销商
-        store_name:门店/经销商名称
+        store_name:门店经销商名称
         store_phone_name:门店/经销商联系人名称
         store_phone:门店/经销商电话
         store_address:门店/经销商地址

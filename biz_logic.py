@@ -82,10 +82,28 @@ def new_store_contract() -> flask.wrappers.Response:
     try:
         infoLogger.log("/store/new_store_record 开始")
         new_record = __extract_store_record(request.get_json())
-        print(new_record.generate_tuple())
         infoLogger.log(request.get_json())
         success = store_sql.insert_store_contract(new_record)
         infoLogger.log("/store/new_store_record success: " + str(success), line_below=True)
+        return __quick_response(success)
+    except Exception as e:
+        __log_err(e, request)
+        return response_failure()
+
+
+@bp.route("/store/query_is_exist", methods=["POST"])
+def new_store_contract() -> flask.wrappers.Response:
+    """
+    插入一个新的门店合同。
+
+    :return: flask.wrappers.Response:
+    """
+    try:
+        infoLogger.log("/store/query_is_exist 开始")
+        new_record = __extract_store_record(request.get_json())
+        infoLogger.log(request.get_json())
+        success = store_sql.insert_store_contract(new_record)
+        infoLogger.log("/store/query_is_exist success: " + str(success), line_below=True)
         return __quick_response(success)
     except Exception as e:
         __log_err(e, request)
