@@ -43,11 +43,11 @@ def __extract_store_record(data_json) -> StoreRecord:
     if book_time != '0001-01-01':
         infoLogger.log("添加任务  预约拜访时间"+str(book_time))
         print(222)
-        book_year = datetime.strptime(book_time, '%Y-%m-%d-%H-%M-%S').year
+        book_year = datetime.strptime(book_time, '%Y-%m-%d %H:%M').year
         print(book_year)
-        book_month = datetime.strptime(book_time, '%Y-%m-%d-%H-%M-%S').month
+        book_month = datetime.strptime(book_time, '%Y-%m-%d %H:%M').month
         print(book_month)
-        book_day = datetime.strptime(book_time, '%Y-%m-%d-%H-%M-%S').day
+        book_day = datetime.strptime(book_time, '%Y-%m-%d %H:%M').day
         print(book_day)
         print(book_year,book_month,book_day)
         scheduler.add_job(func=send_message_book, id=str(book_time),
@@ -57,9 +57,9 @@ def __extract_store_record(data_json) -> StoreRecord:
     if next_time != '0001-01-01':
         print(222)
         infoLogger.log("添加任务  下一次拜访时间"+str(next_time))
-        book_year = datetime.strptime(next_time, '%Y-%m-%d-%H-%M-%S').year
-        book_month = datetime.strptime(next_time, '%Y-%m-%d-%H-%M-%S').month
-        book_day = datetime.strptime(next_time, '%Y-%m-%d-%H-%M-%S').day
+        book_year = datetime.strptime(next_time, '%Y-%m-%d %H:%M').year
+        book_month = datetime.strptime(next_time, '%Y-%m-%d %H:%M').month
+        book_day = datetime.strptime(next_time, '%Y-%m-%d %H:%M').day
         print(next_time,book_month,book_day)
         scheduler.add_job(func=send_message_book, id=str(next_time),
                           trigger='date', run_date=datetime(book_year, book_month, book_day,13, 22, 0))
