@@ -9,9 +9,9 @@ from flask_cors import CORS
 from logger.logger import infoLogger, errLogger
 from util.request_hander.common import verify_auth_token
 
-from util.request_hander.store_record import __extract_store_record
+from util.request_hander.store_record import __extract_store_record, extract_store_is_exist
 from util.response_handler import (
-    response_success, response_failure
+    response_success, response_failure, response_with_msg
 )
 
 # db operation
@@ -92,7 +92,7 @@ def new_store_contract() -> flask.wrappers.Response:
 
 
 @bp.route("/store/query_is_exist", methods=["POST"])
-def query_is_exist() -> flask.wrappers.Response:
+def query_is_exist_api() -> flask.wrappers.Response:
     """
     插入一个新的门店合同。
 
@@ -100,11 +100,14 @@ def query_is_exist() -> flask.wrappers.Response:
     """
     try:
         infoLogger.log("/store/query_is_exist 开始")
-        new_record = __extract_store_record(request.get_json())
-        infoLogger.log(request.get_json())
-        success = store_sql.insert_store_contract(new_record)
-        infoLogger.log("/store/query_is_exist success: " + str(success), line_below=True)
-        return __quick_response(success)
+        print(request.get_json())
+        record = extract_store_is_exist(request.get_json())
+        infoLogger.log(record)
+        infoLogger.log("/store/query_is_exist success: " + str(record), line_below=True)
+        if len(record) == 0:
+            return response_with_msg("没有归属任何销售")
+        elif len(record) != 0:
+            return response_with_msg("有销售正在跟进")
     except Exception as e:
         __log_err(e, request)
         return response_failure()

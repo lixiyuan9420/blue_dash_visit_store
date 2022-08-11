@@ -6,10 +6,29 @@ import requests
 from config import APP_ID, APP_SECRET, emails
 from db.operation.store import StoreRecord
 from db.operation.store_sql import query_store_record_1, query_store_record, query_store_record_yesterday, \
-    query_store_record_yesterday_1, query_store_record_two_day, query_store_record_two_day_1
+    query_store_record_yesterday_1, query_store_record_two_day, query_store_record_two_day_1, query_is_exist
 from init import scheduler
 from logger.logger import infoLogger, errLogger
 
+def extract_store_is_exist(data_json) :
+    # {
+    #
+    #     "查询归属": {
+    #
+    #         "成员": "xxx",
+    #         "门店": "xxx",
+    #         "经销商": "xxx"
+    #     },
+    #
+    #     "token": "this_is_a_token"
+    #
+    # }
+    data = data_json["查询归属"]
+    member = data["成员"]
+    store = data["门店"]
+    sale = data["经销商"]
+    is_exist = query_is_exist(store,sale,member)
+    return is_exist
 
 
 def __extract_store_record(data_json) -> StoreRecord:
