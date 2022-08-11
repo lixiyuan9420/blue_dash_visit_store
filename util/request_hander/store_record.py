@@ -27,9 +27,9 @@ def extract_store_is_exist(data_json) :
     member = data["成员"]
     store = data["门店"]
     sale = data["经销商"]
-    if store == "None":
+    if store is None:
         store = "null"
-    if sale == "None":
+    if sale is None:
         sale = "null"
     is_exist = query_is_exist(store,sale,member)
     return is_exist
