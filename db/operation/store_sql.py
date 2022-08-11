@@ -13,7 +13,7 @@ condition_query_store_record_yesterday = "where to_days(now())-to_days(预约日
 condition_query_store_record_yesterday_1 = "where to_days(now())-to_days(下次拜访日期)=1"
 condition_query_store_record_two_day = "where to_days(now())-to_days(预约日期) = 2"
 condition_query_store_record_two_day_1 = "where to_days(now())-to_days(下次拜访日期)=2"
-condition_query_is_exist_store = "where 门店 = '%s' and 经销商 = '%s' and 成员 = '%s'"
+condition_query_is_exist_store = "where 门店 = %s and 经销商 = %s and 成员 = %s"
 
 
 def insert_store_contract(store_record: StoreRecord) -> bool:
