@@ -19,7 +19,7 @@ app.register_blueprint(biz_logic.bp)
 
 # 自动运行这个app
 if __name__ == '__main__':
-    scheduler.add_job(func=send_message_total,id='1', trigger='interval',days = 1,start_date = '2022-08-11 09:00:00')
+    scheduler.add_job(func=send_message_total,id='1', trigger='interval',days = 1,start_date = '2022-08-12 17:05:00')
     scheduler.init_app(app=app)
     scheduler.start()
     app.run(host='0.0.0.0',port=3392)
