@@ -100,13 +100,12 @@ def query_is_exist_api() -> flask.wrappers.Response:
     """
     try:
         infoLogger.log("/store/query_is_exist 开始")
-        print(request.get_json())
         record = extract_store_is_exist(request.get_json())
         infoLogger.log(record)
         infoLogger.log("/store/query_is_exist success: " + str(record), line_below=True)
-        if len(record) == 0:
+        if record == 0:
             return response_with_msg("没有归属任何销售")
-        elif len(record) != 0:
+        elif record != 0:
             return response_with_msg("有销售正在跟进")
     except Exception as e:
         __log_err(e, request)

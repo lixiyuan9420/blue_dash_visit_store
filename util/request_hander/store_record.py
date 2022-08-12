@@ -6,9 +6,12 @@ import requests
 from config import APP_ID, APP_SECRET, emails
 from db.operation.store import StoreRecord
 from db.operation.store_sql import query_store_record_1, query_store_record, query_store_record_yesterday, \
-    query_store_record_yesterday_1, query_store_record_two_day, query_store_record_two_day_1, query_is_exist
+    query_store_record_yesterday_1, query_store_record_two_day, query_store_record_two_day_1, query_is_exist, \
+    query_is_exist_by_name, query_is_exist_by_store, query_is_exist_by_sale, query_is_exist_by_people, \
+    query_is_exist_by_address, query_is_exist_by_phone
 from init import scheduler
 from logger.logger import infoLogger, errLogger
+
 
 def extract_store_is_exist(data_json) :
     # {
@@ -27,11 +30,35 @@ def extract_store_is_exist(data_json) :
     member = data["成员"]
     store = data["门店"]
     sale = data["经销商"]
+    store_people = data["门店联系人"]
+    sale_people = data["经销商联系人"]
+    store_phone = data["门店电话"]
+    sale_phone = data["经销商电话"]
+    store_address = data["门店地址"]
+    sale_address = data["经销商地址"]
     if store is None:
         store = "null"
     if sale is None:
         sale = "null"
-    is_exist = query_is_exist(store,sale,member)
+    if store_people is None:
+        store_people = "null"
+    if sale_people is None:
+        sale_people = "null"
+    if store_phone is None:
+        store_phone = "null"
+    if sale_phone is None:
+        sale_phone = "null"
+    store_is_exist = query_is_exist_by_store(store)
+    sale_is_exist = query_is_exist_by_sale(sale)
+    store_people_is_exist = query_is_exist_by_people(store_people)
+    sale_people_is_exist = query_is_exist_by_people(sale_people)
+    store_address_is_exist = query_is_exist_by_address(store_address)
+    sale_address_is_exist = query_is_exist_by_address(sale_address)
+    store_phone_is_exist = query_is_exist_by_phone(store_phone)
+    sale_phone_is_exist = query_is_exist_by_phone(sale_phone)
+    is_exist = 0
+    if store_is_exist+sale_is_exist+store_people_is_exist+sale_people_is_exist+store_address_is_exist+sale_address_is_exist+store_phone_is_exist+sale_phone_is_exist>0:
+        is_exist=store_is_exist+sale_is_exist+store_people_is_exist+sale_people_is_exist+store_address_is_exist+sale_address_is_exist+sale_phone_is_exist+store_phone_is_exist
     return is_exist
 
 
