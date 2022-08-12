@@ -54,7 +54,7 @@ def extract_store_is_exist(data_json) :
     sale_phone_is_exist = query_is_exist_by_phone(sale_phone)
     is_exist = 0
     if len(store_is_exist)+len(sale_is_exist)+len(store_people_is_exist)+len(sale_people_is_exist)+len(store_address_is_exist)+len(sale_address_is_exist)+len(store_phone_is_exist)+len(sale_phone_is_exist)>0:
-        is_exist=store_is_exist+sale_is_exist+store_people_is_exist+sale_people_is_exist+store_address_is_exist+sale_address_is_exist+sale_phone_is_exist+store_phone_is_exist
+        is_exist=len(store_is_exist)+len(sale_is_exist)+len(store_people_is_exist)+len(sale_people_is_exist)+len(store_address_is_exist)+len(sale_address_is_exist)+len(sale_phone_is_exist)+len(store_phone_is_exist)
     return is_exist
 
 
