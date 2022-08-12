@@ -194,7 +194,7 @@ def query_is_exist_by_store(store):
      查询是否存在
      :return:
      """
-     return  __query_is_exist(condition_query_is_exist_store,(store))
+     return  __query_is_exist(condition_query_is_exist_store,(store,))
 
 
 def query_is_exist_by_sale(sale):
