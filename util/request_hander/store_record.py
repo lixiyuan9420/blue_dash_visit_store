@@ -36,18 +36,6 @@ def extract_store_is_exist(data_json) :
     sale_phone = data["经销商电话"]
     store_address = data["门店地址"]
     sale_address = data["经销商地址"]
-    if store is None:
-        store = "null"
-    if sale is None:
-        sale = "null"
-    if store_people is None:
-        store_people = "null"
-    if sale_people is None:
-        sale_people = "null"
-    if store_phone is None:
-        store_phone = "null"
-    if sale_phone is None:
-        sale_phone = "null"
     print(111)
     store_is_exist = query_is_exist_by_store(store)
     print(222)
