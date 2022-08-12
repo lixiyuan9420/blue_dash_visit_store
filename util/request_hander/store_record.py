@@ -39,8 +39,8 @@ def extract_store_is_exist(data_json) :
     print(111)
     store_is_exist = query_is_exist_by_store(store)
     print(222)
-    # sale_is_exist = query_is_exist_by_sale(sale)
-    sale_is_exist = []
+    sale_is_exist = query_is_exist_by_sale(sale)
+    # sale_is_exist = []
     print(333)
     store_people_is_exist = query_is_exist_by_people(store_people)
     print(444)
