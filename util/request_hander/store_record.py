@@ -48,12 +48,19 @@ def extract_store_is_exist(data_json) :
         store_phone = "null"
     if sale_phone is None:
         sale_phone = "null"
+    print(111)
     store_is_exist = query_is_exist_by_store(store)
+    print(222)
     sale_is_exist = query_is_exist_by_sale(sale)
+    print(333)
     store_people_is_exist = query_is_exist_by_people(store_people)
+    print(444)
     sale_people_is_exist = query_is_exist_by_people(sale_people)
+    print(555)
     store_address_is_exist = query_is_exist_by_address(store_address)
+    print(666)
     sale_address_is_exist = query_is_exist_by_address(sale_address)
+    print(777)
     store_phone_is_exist = query_is_exist_by_phone(store_phone)
     sale_phone_is_exist = query_is_exist_by_phone(sale_phone)
     is_exist = 0
