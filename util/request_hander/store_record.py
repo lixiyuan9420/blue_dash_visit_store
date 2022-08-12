@@ -6,7 +6,7 @@ import requests
 from config import APP_ID, APP_SECRET, emails
 from db.operation.store import StoreRecord
 from db.operation.store_sql import query_store_record_1, query_store_record, query_store_record_yesterday, \
-    query_store_record_yesterday_1, query_store_record_two_day, query_store_record_two_day_1, query_is_exist, \
+    query_store_record_yesterday_1, query_store_record_two_day, query_store_record_two_day_1, \
     query_is_exist_by_name, query_is_exist_by_store, query_is_exist_by_sale, query_is_exist_by_people, \
     query_is_exist_by_address, query_is_exist_by_phone
 from init import scheduler
