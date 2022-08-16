@@ -1,5 +1,4 @@
 import json
-from datetime import datetime
 
 import requests
 
@@ -7,13 +6,12 @@ from config import APP_ID, APP_SECRET, emails
 from db.operation.store import StoreRecord
 from db.operation.store_sql import query_store_record_1, query_store_record, query_store_record_yesterday, \
     query_store_record_yesterday_1, query_store_record_two_day, query_store_record_two_day_1, \
-    query_is_exist_by_name, query_is_exist_by_store, query_is_exist_by_sale, query_is_exist_by_people, \
+    query_is_exist_by_store, query_is_exist_by_sale, query_is_exist_by_people, \
     query_is_exist_by_address, query_is_exist_by_phone
-from init import scheduler
 from logger.logger import infoLogger, errLogger
 
 
-def extract_store_is_exist(data_json) :
+def extract_store_is_exist(data_json):
     # {
     #
     #     "查询归属": {
@@ -53,8 +51,12 @@ def extract_store_is_exist(data_json) :
     store_phone_is_exist = query_is_exist_by_phone(store_phone)
     sale_phone_is_exist = query_is_exist_by_phone(sale_phone)
     is_exist = 0
-    if len(store_is_exist)+len(sale_is_exist)+len(store_people_is_exist)+len(sale_people_is_exist)+len(store_address_is_exist)+len(sale_address_is_exist)+len(store_phone_is_exist)+len(sale_phone_is_exist)>0:
-        is_exist=len(store_is_exist)+len(sale_is_exist)+len(store_people_is_exist)+len(sale_people_is_exist)+len(store_address_is_exist)+len(sale_address_is_exist)+len(sale_phone_is_exist)+len(store_phone_is_exist)
+    if len(store_is_exist) + len(sale_is_exist) + len(store_people_is_exist) + len(sale_people_is_exist) + len(
+            store_address_is_exist) + len(sale_address_is_exist) + len(store_phone_is_exist) + len(
+            sale_phone_is_exist) > 0:
+        is_exist = len(store_is_exist) + len(sale_is_exist) + len(store_people_is_exist) + len(
+            sale_people_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist) + len(
+            sale_phone_is_exist) + len(store_phone_is_exist)
     return is_exist
 
 
@@ -92,9 +94,9 @@ def __extract_store_record(data_json) -> StoreRecord:
     #     book_year = datetime.strptime(book_time, '%Y-%m-%d %H:%M').year
     #     book_month = datetime.strptime(book_time, '%Y-%m-%d %H:%M').month
     #     book_day = datetime.strptime(book_time, '%Y-%m-%d %H:%M').day
-        # scheduler.add_job(func=send_message_book, id=str(book_time)+str(sale_name),
-        #                   trigger='date', run_date=datetime(book_year, book_month, book_day,13, 0, 0),timezone='Asia/Shanghai')
-        # infoLogger.log("添加" + str(book_time) + "任务已完成")
+    # scheduler.add_job(func=send_message_book, id=str(book_time)+str(sale_name),
+    #                   trigger='date', run_date=datetime(book_year, book_month, book_day,13, 0, 0),timezone='Asia/Shanghai')
+    # infoLogger.log("添加" + str(book_time) + "任务已完成")
     # if next_time != '0001-01-01':
     #     infoLogger.log("添加任务  下一次拜访时间"+str(next_time))
     #     book_year = datetime.strptime(next_time, '%Y-%m-%d %H:%M').year
@@ -126,7 +128,7 @@ def send_message_book():
                     user_name = email.get('name')
                     chat_id = get_chatId()
                     user_id = get_userid(user_email)
-                    send_messages(user_id, chat_id, user_email, user_name,store_book)
+                    send_messages(user_id, chat_id, user_email, user_name, store_book)
         for store in stores:
             for email in emails:
                 if email.get('name') == store.sale_name:
@@ -134,7 +136,7 @@ def send_message_book():
                     user_name = email.get('name')
                     chat_id = get_chatId()
                     user_id = get_userid(user_email)
-                    send_messages(user_id, chat_id, user_email, user_name,store)
+                    send_messages(user_id, chat_id, user_email, user_name, store)
         infoLogger.log("发送预约任务执行成功")
     except:
         errLogger.log("发送预约任务执行失败")
@@ -156,7 +158,7 @@ def send_message_book_second():
                     user_name = email.get('name')
                     chat_id = get_chatId()
                     user_id = get_userid(user_email)
-                    send_messages_yesterday(user_id, chat_id, user_email, user_name,store_book)
+                    send_messages_yesterday(user_id, chat_id, user_email, user_name, store_book)
         for store in stores:
             for email in emails:
                 if email.get('name') == store.sale_name:
@@ -164,7 +166,7 @@ def send_message_book_second():
                     user_name = email.get('name')
                     chat_id = get_chatId()
                     user_id = get_userid(user_email)
-                    send_messages_yesterday(user_id, chat_id, user_email, user_name,store)
+                    send_messages_yesterday(user_id, chat_id, user_email, user_name, store)
         infoLogger.log("发送提前一天拜访任务执行成功")
     except:
         errLogger.log("发送提前一天拜访任务执行失败")
@@ -186,7 +188,7 @@ def send_message_book_third():
                     user_name = email.get('name')
                     chat_id = get_chatId()
                     user_id = get_userid(user_email)
-                    send_messages_two_day(user_id, chat_id, user_email, user_name,store_book)
+                    send_messages_two_day(user_id, chat_id, user_email, user_name, store_book)
         for store in stores:
             for email in emails:
                 if email.get('name') == store.sale_name:
@@ -194,11 +196,10 @@ def send_message_book_third():
                     user_name = email.get('name')
                     chat_id = get_chatId()
                     user_id = get_userid(user_email)
-                    send_messages_two_day(user_id, chat_id, user_email, user_name,store)
+                    send_messages_two_day(user_id, chat_id, user_email, user_name, store)
         infoLogger.log("发送提前两天拜访任务执行成功")
     except:
         errLogger.log("发送提前两天拜访任务执行失败")
-
 
 
 def get_chatId():
@@ -273,8 +274,8 @@ def send_messages(userID, chatID, email, name, store):
             "user_id": userID,
             "msg_type": "text",
             "content": {
-                "text": str(name)+"，早上好！您预约今天拜访"+str(store.store_name)+str(store.store)+str(store.sales)+
-                        "门店，拜访目的为"+str(store.goal)+"，请准时到访。"
+                "text": str(name) + "，早上好！您预约今天拜访" + str(store.store_name) + str(store.store) + str(store.sales) +
+                        "门店，拜访目的为" + str(store.goal) + "，请准时到访。"
             }
         }
         token = get_token()
@@ -284,7 +285,7 @@ def send_messages(userID, chatID, email, name, store):
         }
         url_mess = "https://open.feishu.cn/open-apis/message/v4/send/"
         requests.post(url_mess, json=data1, headers=headers_group)
-        infoLogger.log("__month_send_messages"+str(name)+" 发送预约消息成功")
+        infoLogger.log("__month_send_messages" + str(name) + " 发送预约消息成功")
     except:
         errLogger.log("send_messages  发送消息失败")
 
@@ -303,8 +304,8 @@ def send_messages_yesterday(userID, chatID, email, name, store):
             "user_id": userID,
             "msg_type": "text",
             "content": {
-                "text": str(name)+"，早上好！您预约明天拜访"+str(store.store_name)+str(store.store)+str(store.sales)+
-                        "门店，拜访目的为"+str(store.goal)+"，请准时到访。"
+                "text": str(name) + "，早上好！您预约明天拜访" + str(store.store_name) + str(store.store) + str(store.sales) +
+                        "门店，拜访目的为" + str(store.goal) + "，请准时到访。"
             }
         }
         token = get_token()
@@ -314,7 +315,7 @@ def send_messages_yesterday(userID, chatID, email, name, store):
         }
         url_mess = "https://open.feishu.cn/open-apis/message/v4/send/"
         requests.post(url_mess, json=data1, headers=headers_group)
-        infoLogger.log("__month_send_messages"+str(name)+" 发送提前一天消息成功")
+        infoLogger.log("__month_send_messages" + str(name) + " 发送提前一天消息成功")
     except:
         errLogger.log("send_messages  发送提前一天消息失败")
 
@@ -333,8 +334,8 @@ def send_messages_two_day(userID, chatID, email, name, store):
             "user_id": userID,
             "msg_type": "text",
             "content": {
-                "text": str(name)+"，早上好！您预约后天拜访"+str(store.store_name)+str(store.store)+str(store.sales)+
-                        "门店，拜访目的为"+str(store.goal)+"，请准时到访。"
+                "text": str(name) + "，早上好！您预约后天拜访" + str(store.store_name) + str(store.store) + str(store.sales) +
+                        "门店，拜访目的为" + str(store.goal) + "，请准时到访。"
             }
         }
         token = get_token()
@@ -344,6 +345,6 @@ def send_messages_two_day(userID, chatID, email, name, store):
         }
         url_mess = "https://open.feishu.cn/open-apis/message/v4/send/"
         requests.post(url_mess, json=data1, headers=headers_group)
-        infoLogger.log("__month_send_messages"+str(name)+" 发送提前两天消息成功")
+        infoLogger.log("__month_send_messages" + str(name) + " 发送提前两天消息成功")
     except:
         errLogger.log("send_messages  发送提前两天消息失败")

@@ -15,6 +15,7 @@ condition_query_store_record_yesterday = "where to_days(now())-to_days(预约日
 condition_query_store_record_yesterday_1 = "where to_days(now())-to_days(下次拜访日期)=1"
 condition_query_store_record_two_day = "where to_days(now())-to_days(预约日期) = 2"
 condition_query_store_record_two_day_1 = "where to_days(now())-to_days(下次拜访日期)=2"
+condition_query_is_exist_after = "where 门店经销商名称 = %s"
 condition_query_is_exist_store = "where 门店 = %s"
 condition_query_is_exist_sale = "where 经销商 = %s"
 condition_query_is_exist_people = "where '门店/经销商联系人' = %s"
@@ -194,11 +195,11 @@ def query_is_exist_by_store(store):
      查询是否存在
      :return:
      """
-     return  __query_is_exist(condition_query_is_exist_store,(store,))
+     return  __query_is_exist(condition_query_is_exist_after,(store,))
 
 
 def query_is_exist_by_sale(sale):
-    return __query_is_exist(condition_query_is_exist_sale,(sale,))
+    return __query_is_exist(condition_query_is_exist_after,(sale,))
 
 
 def query_is_exist_by_people(sale_store):
