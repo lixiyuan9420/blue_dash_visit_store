@@ -196,12 +196,18 @@ def query_is_exist_by_store(store):
      查询是否存在
      :return:
      """
-    new_store = store[len(store) - 3:len(store)]
+    if len(store)>0:
+        new_store = store[len(store) - 3:len(store)]
+    else:
+        new_store = store
     return __query_is_exist(condition_query_is_exist_after, (new_store,))
 
 
 def query_is_exist_by_sale(sale):
-    new_sale = sale[len(sale) - 3:len(sale)]
+    if len(sale)>0:
+        new_sale = sale[len(sale) - 3:len(sale)]
+    else:
+        new_sale = sale
     return __query_is_exist(condition_query_is_exist_after, (new_sale,))
 
 
