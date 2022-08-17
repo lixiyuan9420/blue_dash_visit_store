@@ -191,30 +191,30 @@ def query_store_record_two_day_1() -> List[StoreRecord]:
 
 
 def query_is_exist_by_store(store):
-     """
+    """
      查询是否存在
      :return:
      """
-     return  __query_is_exist(condition_query_is_exist_after,(store,))
+    return __query_is_exist(condition_query_is_exist_after, (store,))
 
 
 def query_is_exist_by_sale(sale):
-    return __query_is_exist(condition_query_is_exist_after,(sale,))
+    return __query_is_exist(condition_query_is_exist_after, (sale,))
 
 
 def query_is_exist_by_people(sale_store):
-    return __query_is_exist(condition_query_is_exist_people,(sale_store,))
+    return __query_is_exist(condition_query_is_exist_people, (sale_store,))
 
 
 def query_is_exist_by_address(address):
-    return __query_is_exist(condition_query_is_exist_address,(address,))
+    return __query_is_exist(condition_query_is_exist_address, (address,))
 
 
 def query_is_exist_by_phone(phone):
-    return __query_is_exist(condition_query_is_exist_phone,(phone,))
+    return __query_is_exist(condition_query_is_exist_phone, (phone,))
 
 
-def __query_is_exist(condition:str,params:Tuple = ()) -> List[StoreRecord]:
+def __query_is_exist(condition: str, params: Tuple = ()) -> List[StoreRecord]:
     """
     查询是否存在
     :param condition:
@@ -232,10 +232,10 @@ def __query_is_exist(condition:str,params:Tuple = ()) -> List[StoreRecord]:
 
 
 def query_is_exist_by_name(store):
-    return __query_is_exist_by_name(condition_query_is_exist_store_info,(store,))
+    return __query_is_exist_by_name(condition_query_is_exist_store_info, (store,))
 
 
-def __query_is_exist_by_name(condition: str, params: Tuple = ()) ->List[StoreBasicInfo]:
+def __query_is_exist_by_name(condition: str, params: Tuple = ()) -> List[StoreBasicInfo]:
     r = []
     sql = query_store_belong_prefix + " " + condition
     tuples = standard_query(sql, params)

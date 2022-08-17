@@ -34,29 +34,18 @@ def extract_store_is_exist(data_json):
     sale_phone = data["经销商电话"]
     store_address = data["门店地址"]
     sale_address = data["经销商地址"]
-    print(111)
     store_is_exist = query_is_exist_by_store(store)
-    print(222)
     sale_is_exist = query_is_exist_by_sale(sale)
     # sale_is_exist = []
-    print(333)
     store_people_is_exist = query_is_exist_by_people(store_people)
-    print(444)
     sale_people_is_exist = query_is_exist_by_people(sale_people)
-    print(555)
     store_address_is_exist = query_is_exist_by_address(store_address)
-    print(666)
     sale_address_is_exist = query_is_exist_by_address(sale_address)
-    print(777)
     store_phone_is_exist = query_is_exist_by_phone(store_phone)
     sale_phone_is_exist = query_is_exist_by_phone(sale_phone)
     is_exist = 0
-    if len(store_is_exist) + len(sale_is_exist) + len(store_people_is_exist) + len(sale_people_is_exist) + len(
-            store_address_is_exist) + len(sale_address_is_exist) + len(store_phone_is_exist) + len(
-            sale_phone_is_exist) > 0:
-        is_exist = len(store_is_exist) + len(sale_is_exist) + len(store_people_is_exist) + len(
-            sale_people_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist) + len(
-            sale_phone_is_exist) + len(store_phone_is_exist)
+    if len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist) > 0:
+        is_exist = len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist)
     return is_exist
 
 
