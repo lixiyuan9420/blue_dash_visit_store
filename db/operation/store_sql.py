@@ -196,7 +196,7 @@ def query_is_exist_by_store(store):
      查询是否存在
      :return:
      """
-    if len(store)>0:
+    if store is not None:
         new_store = store[len(store) - 3:len(store)]
     else:
         new_store = store
@@ -204,7 +204,7 @@ def query_is_exist_by_store(store):
 
 
 def query_is_exist_by_sale(sale):
-    if len(sale)>0:
+    if sale is not None:
         new_sale = sale[len(sale) - 3:len(sale)]
     else:
         new_sale = sale
