@@ -216,7 +216,10 @@ def query_is_exist_by_people(sale_store):
 
 
 def query_is_exist_by_address(address):
-    new_address = address[len(address)-3:len(address)]
+    if address is not None:
+        new_address = address[len(address)-3:len(address)]
+    else:
+        new_address = address
     return __query_is_exist(condition_query_is_exist_address, (new_address,))
 
 
