@@ -15,13 +15,14 @@ condition_query_store_record_yesterday = "where to_days(now())-to_days(预约日
 condition_query_store_record_yesterday_1 = "where to_days(now())-to_days(下次拜访日期)=1"
 condition_query_store_record_two_day = "where to_days(now())-to_days(预约日期) = 2"
 condition_query_store_record_two_day_1 = "where to_days(now())-to_days(下次拜访日期)=2"
-condition_query_is_exist_after = "where 门店经销商名称 = '\%%s\%'"
+condition_query_is_exist_after = "where 门店经销商名称 = %s"
 condition_query_is_exist_store = "where 门店 = %s"
 condition_query_is_exist_sale = "where 经销商 = %s"
 condition_query_is_exist_people = "where '门店/经销商联系人' = %s"
-condition_query_is_exist_address = "where '门店/经销商地址' = '\%%s\%'"
+condition_query_is_exist_address = "where '门店/经销商地址' = %s"
 condition_query_is_exist_phone = "where '门店/经销商电话' = %s"
 condition_query_is_exist_store_info = "where 门店名称 = %s"
+
 
 
 def insert_store_contract(store_record: StoreRecord) -> bool:
@@ -246,4 +247,16 @@ def __query_is_exist_by_name(condition: str, params: Tuple = ()) -> List[StoreBa
         raise ValueError("standard_query() returns None")
     for the_tuple in tuples:
         r.append(StoreBasicInfo(*the_tuple[1:], data_id=the_tuple[0]))
+    return r
+
+
+def query_is_exist() -> []:
+    r = []
+    sql = "select 门店经销商名称 from 门店拜访记录"
+    params = ()
+    tuples = standard_query(sql, params)
+    if tuples is None:
+        raise ValueError("standard_query() returns None")
+    for the_tuple in tuples:
+        r.append(*the_tuple[1:])
     return r

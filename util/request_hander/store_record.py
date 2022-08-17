@@ -1,13 +1,16 @@
 import json
 
+import jieba
+import pandas as pd
 import requests
+from gensim import corpora, models, similarities
 
 from config import APP_ID, APP_SECRET, emails
 from db.operation.store import StoreRecord
 from db.operation.store_sql import query_store_record_1, query_store_record, query_store_record_yesterday, \
     query_store_record_yesterday_1, query_store_record_two_day, query_store_record_two_day_1, \
     query_is_exist_by_store, query_is_exist_by_sale, query_is_exist_by_people, \
-    query_is_exist_by_address, query_is_exist_by_phone
+    query_is_exist_by_address, query_is_exist_by_phone, query_is_exist
 from logger.logger import infoLogger, errLogger
 
 
@@ -41,11 +44,13 @@ def extract_store_is_exist(data_json):
     sale_people_is_exist = query_is_exist_by_people(sale_people)
     store_address_is_exist = query_is_exist_by_address(store_address)
     sale_address_is_exist = query_is_exist_by_address(sale_address)
+    store_address_is_exist_confirm = confirm_address(store_address)
+    sale_address_is_exist_confirm = confirm_address(sale_address)
     store_phone_is_exist = query_is_exist_by_phone(store_phone)
     sale_phone_is_exist = query_is_exist_by_phone(sale_phone)
     is_exist = 0
-    if len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist) > 0:
-        is_exist = len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist)
+    if len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist) + len(store_address_is_exist_confirm) + len(sale_address_is_exist_confirm) > 0:
+        is_exist = len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist)+len(store_address_is_exist_confirm) + len(sale_address_is_exist_confirm)
     return is_exist
 
 
@@ -336,3 +341,32 @@ def send_messages_two_day(userID, chatID, email, name, store):
         infoLogger.log("__month_send_messages" + str(name) + " 发送提前两天消息成功")
     except:
         errLogger.log("send_messages  发送提前两天消息失败")
+
+
+def confirm_address(address):
+    data = query_is_exist()
+    find = address
+    data_split_word = data.apply(jieba.lcut)
+    dictionary = corpora.Dictionary(data_split_word.values)
+    data_corpus = data_split_word.apply(dictionary.doc2bow)
+    trantab = str.maketrans("0123456789", "零一二三四五六七八九")
+    find_corpus = find.name.apply(
+        lambda x: dictionary.doc2bow(jieba.lcut(x.translate(trantab))))
+
+    tfidf = models.TfidfModel(data_corpus.to_list())
+    index = similarities.SparseMatrixSimilarity(
+        tfidf[data_corpus], num_features=len(dictionary))
+
+    result = []
+    for corpus in find_corpus.values:
+        sim = pd.Series(index[corpus])
+        print(sim.nlargest(1).values)
+        if sim.nlargest(1).values >= 0.75:
+            result.append(data.user[sim.nlargest(1).index].values)
+        else:
+            continue
+    result = pd.DataFrame(result)
+    # result.rename(columns=lambda i: f"匹配{i + 1}", inplace=True)
+    result = pd.concat([result], axis=1)
+    result.head(30)
+    return result
