@@ -207,7 +207,6 @@ def get_chatId():
         infoLogger.log("____get_chatId 结束")
         return chatId
     except:
-        print('请求失败1')
         return None
 
 
