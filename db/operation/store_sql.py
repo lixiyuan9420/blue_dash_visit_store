@@ -195,11 +195,13 @@ def query_is_exist_by_store(store):
      查询是否存在
      :return:
      """
-    return __query_is_exist(condition_query_is_exist_after, (store,))
+    new_store = store[len(store) - 3:len(store)]
+    return __query_is_exist(condition_query_is_exist_after, (new_store,))
 
 
 def query_is_exist_by_sale(sale):
-    return __query_is_exist(condition_query_is_exist_after, (sale,))
+    new_sale = sale[len(sale) - 3:len(sale)]
+    return __query_is_exist(condition_query_is_exist_after, (new_sale,))
 
 
 def query_is_exist_by_people(sale_store):
@@ -207,7 +209,8 @@ def query_is_exist_by_people(sale_store):
 
 
 def query_is_exist_by_address(address):
-    return __query_is_exist(condition_query_is_exist_address, (address,))
+    new_address = address[len(address)-3:len(address)]
+    return __query_is_exist(condition_query_is_exist_address, (new_address,))
 
 
 def query_is_exist_by_phone(phone):
