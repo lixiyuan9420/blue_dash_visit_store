@@ -347,18 +347,18 @@ def confirm_address(address):
     data = query_is_exist()
     find = address
     # 遍历该列表
-    with open("mdjcxx.csv", 'a', encoding='gdk') as user:
+    with open("mdjcxx.csv", 'a', encoding='gbk') as user:
         user.write("user\n")
     for i in data:
         # 以append的方式不断写入到csv文件中
-        with open("mdjcxx.csv", 'a', encoding='gdk') as user:
+        with open("mdjcxx.csv", 'a', encoding='gbk') as user:
             # 写入文件时增加换行符，保证每个元素位于一行
             user.write(i + '\n')
     # 以append的方式不断写入到csv文件中
-    with open("output.csv", 'a', encoding='gdk') as name:
+    with open("output.csv", 'a', encoding='gbk') as name:
             # 写入文件时增加换行符，保证每个元素位于一行
         name.write('name\n')
-    with open("output.csv", 'a', encoding='gdk') as name:
+    with open("output.csv", 'a', encoding='gbk') as name:
             # 写入文件时增加换行符，保证每个元素位于一行
         name.write(find + '\n')
     data = pd.read_csv("mdjcxx.csv", encoding="gbk")
