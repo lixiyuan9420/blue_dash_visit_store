@@ -266,5 +266,5 @@ def query_is_exist() -> []:
     if tuples is None:
         raise ValueError("standard_query() returns None")
     for the_tuple in tuples:
-        r.append(*the_tuple)
+        r.append(*the_tuple[1])
     return r
