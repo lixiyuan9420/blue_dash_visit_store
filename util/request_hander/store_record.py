@@ -348,8 +348,8 @@ def confirm_address(address):
         data = query_is_exist()
         data.insert(0,'user')
         print(data)
-        find = str(address)
-        data.insert(0,'name')
+        find = [address]
+        find.insert(0,'name')
         print(find)
         # 遍历该列表
 
@@ -358,9 +358,10 @@ def confirm_address(address):
             with open("mdjcxx.csv",'r+', encoding='gbk') as user:
                 # 写入文件时增加换行符，保证每个元素位于一行
                 user.write(str(i) + '\n')
-        with open("new.csv", 'r+', encoding='gbk') as name:
+        for i in find:
+            with open("new.csv", 'r+', encoding='gbk') as name:
                 # 写入文件时增加换行符，保证每个元素位于一行
-            name.write(str(find) + '\n')
+                name.write(str(i) + '\n')
         data = pd.read_csv("mdjcxx.csv", encoding="gbk",error_bad_lines=False)
         print(data)
         find = pd.read_csv("new.csv", encoding="gbk",error_bad_lines=False)
