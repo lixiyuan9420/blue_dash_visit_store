@@ -391,6 +391,7 @@ def confirm_address(address):
             # result.rename(columns=lambda i: f"匹配{i + 1}", inplace=True)
         result = pd.concat([result], axis=1)
         result.head(30)
+        print(result)
         return result
     else:
         return None
