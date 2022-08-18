@@ -361,9 +361,9 @@ def confirm_address(address):
     with open("output.csv", 'a', encoding='gbk') as name:
             # 写入文件时增加换行符，保证每个元素位于一行
         name.write(str(find) + '\n')
-    data = pd.read_csv("mdjcxx.csv", encoding="gbk",error_bad_lines=False)
+    data = pd.read_csv("/mdjcxx.csv", encoding="gbk",error_bad_lines=False)
     print(data)
-    find = pd.read_csv("new.csv", encoding="gbk",error_bad_lines=False)
+    find = pd.read_csv("/new.csv", encoding="gbk",error_bad_lines=False)
     print(find)
     data_split_word = data.user.apply(jieba.lcut)
     dictionary = corpora.Dictionary(data_split_word.values)
