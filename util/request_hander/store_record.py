@@ -346,9 +346,9 @@ def send_messages_two_day(userID, chatID, email, name, store):
 def confirm_address(address):
     data = query_is_exist()
     find = address
-    data = pd.DataFrame(str(data))
-    find = pd.DataFrame(str(find))
-    data_split_word = data.apply(jieba.lcut)
+    data = pd.DataFrame(data)
+    find = pd.DataFrame(find)
+    data_split_word = jieba.lcut(data)
     dictionary = corpora.Dictionary(data_split_word.values)
     data_corpus = data_split_word.apply(dictionary.doc2bow)
     tran_tab = str.maketrans("0123456789", "零一二三四五六七八九")
