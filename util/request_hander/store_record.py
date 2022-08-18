@@ -44,14 +44,17 @@ def extract_store_is_exist(data_json):
     sale_people_is_exist = query_is_exist_by_people(sale_people)
     store_address_is_exist = query_is_exist_by_address(store_address)
     sale_address_is_exist = query_is_exist_by_address(sale_address)
-    store_address_is_exist_confirm = confirm_address(store_address)
-    sale_address_is_exist_confirm = confirm_address(sale_address)
+    exist = 0
+    if store_address is not None:
+        exist = exist + len(confirm_address(store_address))
+    if sale_address is not None:
+        exist = exist + len(confirm_address(sale_address))
     store_phone_is_exist = query_is_exist_by_phone(store_phone)
     sale_phone_is_exist = query_is_exist_by_phone(sale_phone)
     is_exist = 0
 
-    if len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist) + len(store_address_is_exist_confirm) + len(sale_address_is_exist_confirm) > 0:
-        is_exist = len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist)+len(store_address_is_exist_confirm) + len(sale_address_is_exist_confirm)
+    if len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist) + exist > 0:
+        is_exist = len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist)+exist
     return is_exist
 
 
@@ -345,46 +348,49 @@ def send_messages_two_day(userID, chatID, email, name, store):
 
 
 def confirm_address(address):
-    data = query_is_exist()
-    data.insert(0,'user')
-    print(data)
-    find = [address]
-    find.insert(0,'name')
-    print(find)
-        # 遍历该列表
-    for i in data:
-        # 以append的方式不断写入到csv文件中
-        with open("mdjcxx.csv",'r+', encoding='gbk') as user:
-            # 写入文件时增加换行符，保证每个元素位于一行
-            user.write(str(i) + '\n')
-    for i in find:
-        with open("new.csv", 'r+', encoding='gbk') as name:
-            # 写入文件时增加换行符，保证每个元素位于一行
-            name.write(str(i) + '\n')
-    data = pd.read_csv("mdjcxx.csv", encoding="gbk",error_bad_lines=False)
-    print(data)
-    find = pd.read_csv("new.csv", encoding="gbk")
-    print(find)
-    data_split_word = data.user.apply(jieba.lcut)
-    dictionary = corpora.Dictionary(data_split_word.values)
-    data_corpus = data_split_word.apply(dictionary.doc2bow)
-    trantab = str.maketrans("0123456789", "零一二三四五六七八九")
-    find_corpus = find.name.apply(
-        lambda x: dictionary.doc2bow(jieba.lcut(x.translate(trantab))))
+    if address is not None:
+        data = query_is_exist()
+        data.insert(0,'user')
+        print(data)
+        find = [address]
+        find.insert(0,'name')
+        print(find)
+            # 遍历该列表
+        for i in data:
+            # 以append的方式不断写入到csv文件中
+            with open("mdjcxx.csv",'r+', encoding='gbk') as user:
+                # 写入文件时增加换行符，保证每个元素位于一行
+                user.write(str(i) + '\n')
+        for i in find:
+            with open("new.csv", 'r+', encoding='gbk') as name:
+                # 写入文件时增加换行符，保证每个元素位于一行
+                name.write(str(i) + '\n')
+        data = pd.read_csv("mdjcxx.csv", encoding="gbk",error_bad_lines=False)
+        print(data)
+        find = pd.read_csv("new.csv", encoding="gbk")
+        print(find)
+        data_split_word = data.user.apply(jieba.lcut)
+        dictionary = corpora.Dictionary(data_split_word.values)
+        data_corpus = data_split_word.apply(dictionary.doc2bow)
+        trantab = str.maketrans("0123456789", "零一二三四五六七八九")
+        find_corpus = find.name.apply(
+            lambda x: dictionary.doc2bow(jieba.lcut(x.translate(trantab))))
 
-    tfidf = models.TfidfModel(data_corpus.to_list())
-    index = similarities.SparseMatrixSimilarity(
-            tfidf[data_corpus], num_features=len(dictionary))
-    result = []
-    for corpus in find_corpus.values:
-        sim = pd.Series(index[corpus])
-        print(sim.nlargest(1).values)
-        if sim.nlargest(1).values >= 0.75:
-            result.append(data.user[sim.nlargest(1).index].values)
-        else:
-            continue
-    result = pd.DataFrame(result)
-        # result.rename(columns=lambda i: f"匹配{i + 1}", inplace=True)
-    result = pd.concat([result], axis=1)
-    result.head(30)
-    return result
+        tfidf = models.TfidfModel(data_corpus.to_list())
+        index = similarities.SparseMatrixSimilarity(
+                tfidf[data_corpus], num_features=len(dictionary))
+        result = []
+        for corpus in find_corpus.values:
+            sim = pd.Series(index[corpus])
+            print(sim.nlargest(1).values)
+            if sim.nlargest(1).values >= 0.75:
+                result.append(data.user[sim.nlargest(1).index].values)
+            else:
+                continue
+        result = pd.DataFrame(result)
+            # result.rename(columns=lambda i: f"匹配{i + 1}", inplace=True)
+        result = pd.concat([result], axis=1)
+        result.head(30)
+        return result
+    else:
+        return None
