@@ -346,14 +346,29 @@ def send_messages_two_day(userID, chatID, email, name, store):
 def confirm_address(address):
     data = query_is_exist()
     find = address
-    data = pd.DataFrame(data)
-    find = pd.DataFrame(find)
-    data_split_word = jieba.lcut(data)
+    # 遍历该列表
+    with open("mdjcxx.csv", 'a', encoding='gdk') as user:
+        user.write("user\n")
+    for i in data:
+        # 以append的方式不断写入到csv文件中
+        with open("mdjcxx.csv", 'a', encoding='gdk') as user:
+            # 写入文件时增加换行符，保证每个元素位于一行
+            user.write(i + '\n')
+    # 以append的方式不断写入到csv文件中
+    with open("output.csv", 'a', encoding='gdk') as name:
+            # 写入文件时增加换行符，保证每个元素位于一行
+        name.write('name\n')
+    with open("output.csv", 'a', encoding='gdk') as name:
+            # 写入文件时增加换行符，保证每个元素位于一行
+        name.write(find + '\n')
+    data = pd.read_csv("mdjcxx.csv", encoding="gbk")
+    find = pd.read_csv("new.csv", encoding="gbk")
+    data_split_word = data.user.apply(jieba.lcut)
     dictionary = corpora.Dictionary(data_split_word.values)
     data_corpus = data_split_word.apply(dictionary.doc2bow)
-    tran_tab = str.maketrans("0123456789", "零一二三四五六七八九")
-    find_corpus = find.apply(
-        lambda x: dictionary.doc2bow(jieba.lcut(x.translate(tran_tab))))
+    trantab = str.maketrans("0123456789", "零一二三四五六七八九")
+    find_corpus = find.name.apply(
+        lambda x: dictionary.doc2bow(jieba.lcut(x.translate(trantab))))
 
     tfidf = models.TfidfModel(data_corpus.to_list())
     index = similarities.SparseMatrixSimilarity(
@@ -362,9 +377,9 @@ def confirm_address(address):
     result = []
     for corpus in find_corpus.values:
         sim = pd.Series(index[corpus])
-        # print(sim.nlargest(1).values)
+        print(sim.nlargest(1).values)
         if sim.nlargest(1).values >= 0.75:
-            result.append(data[sim.nlargest(1).index].values)
+            result.append(data.user[sim.nlargest(1).index].values)
         else:
             continue
     result = pd.DataFrame(result)
