@@ -22,5 +22,4 @@ if __name__ == '__main__':
     scheduler.add_job(func=send_message_total,id='1', trigger='interval',days = 1,start_date = '2022-08-18 09:00:00')
     scheduler.init_app(app=app)
     scheduler.start()
-    confirm_address("腾飞")
     app.run(host='0.0.0.0',port=3392)
