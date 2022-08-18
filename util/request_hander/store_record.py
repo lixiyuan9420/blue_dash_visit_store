@@ -364,7 +364,7 @@ def confirm_address(address):
                 name.write(str(i) + '\n')
         data = pd.read_csv("mdjcxx.csv", encoding="gbk",error_bad_lines=False)
         print(data)
-        find = pd.read_csv("new.csv", encoding="gbk",error_bad_lines=False)
+        find = pd.read_csv("new.csv", encoding="gbk")
         print(find)
         data_split_word = data.user.apply(jieba.lcut)
         dictionary = corpora.Dictionary(data_split_word.values)
