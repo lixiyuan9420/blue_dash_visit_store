@@ -344,50 +344,53 @@ def send_messages_two_day(userID, chatID, email, name, store):
 
 
 def confirm_address(address):
-    data = query_is_exist()
-    print(data)
-    find = str(address)
-    print(find)
-    # 遍历该列表
-    with open("mdjcxx.csv", 'r+', encoding='gbk') as user:
-        user.write("user\n")
-    for i in data:
+    try:
+        data = query_is_exist()
+        print(data)
+        find = str(address)
+        print(find)
+        # 遍历该列表
+        with open("mdjcxx.csv", 'r+', encoding='gbk') as user:
+            user.write("user\n")
+        for i in data:
+            # 以append的方式不断写入到csv文件中
+            with open("mdjcxx.csv",'a', encoding='gbk') as user:
+                # 写入文件时增加换行符，保证每个元素位于一行
+                user.write(str(i) + '\n')
         # 以append的方式不断写入到csv文件中
-        with open("mdjcxx.csv",'a', encoding='gbk') as user:
-            # 写入文件时增加换行符，保证每个元素位于一行
-            user.write(str(i) + '\n')
-    # 以append的方式不断写入到csv文件中
-    with open("new.csv", 'r+', encoding='gbk') as name:
-            # 写入文件时增加换行符，保证每个元素位于一行
-        name.write('name\n')
-    with open("new.csv", 'a', encoding='gbk') as name:
-            # 写入文件时增加换行符，保证每个元素位于一行
-        name.write(str(find) + '\n')
-    data = pd.read_csv("mdjcxx.csv", encoding="gbk",error_bad_lines=False)
-    print(data)
-    find = pd.read_csv("new.csv", encoding="gbk")
-    print(find)
-    data_split_word = data.user.apply(jieba.lcut)
-    dictionary = corpora.Dictionary(data_split_word.values)
-    data_corpus = data_split_word.apply(dictionary.doc2bow)
-    trantab = str.maketrans("0123456789", "零一二三四五六七八九")
-    find_corpus = find.name.apply(
-        lambda x: dictionary.doc2bow(jieba.lcut(x.translate(trantab))))
+        with open("new.csv", 'r+', encoding='gbk') as name:
+                # 写入文件时增加换行符，保证每个元素位于一行
+            name.write('name\n')
+        with open("new.csv", 'a', encoding='gbk') as name:
+                # 写入文件时增加换行符，保证每个元素位于一行
+            name.write(str(find) + '\n')
+        data = pd.read_csv("mdjcxx.csv", encoding="gbk",error_bad_lines=False)
+        print(data)
+        find = pd.read_csv("new.csv", encoding="gbk",error_bad_lines=False)
+        print(find)
+        data_split_word = data.user.apply(jieba.lcut)
+        dictionary = corpora.Dictionary(data_split_word.values)
+        data_corpus = data_split_word.apply(dictionary.doc2bow)
+        trantab = str.maketrans("0123456789", "零一二三四五六七八九")
+        find_corpus = find.name.apply(
+            lambda x: dictionary.doc2bow(jieba.lcut(x.translate(trantab))))
 
-    tfidf = models.TfidfModel(data_corpus.to_list())
-    index = similarities.SparseMatrixSimilarity(
-        tfidf[data_corpus], num_features=len(dictionary))
+        tfidf = models.TfidfModel(data_corpus.to_list())
+        index = similarities.SparseMatrixSimilarity(
+            tfidf[data_corpus], num_features=len(dictionary))
 
-    result = []
-    for corpus in find_corpus.values:
-        sim = pd.Series(index[corpus])
-        print(sim.nlargest(1).values)
-        if sim.nlargest(1).values >= 0.75:
-            result.append(data.user[sim.nlargest(1).index].values)
-        else:
-            continue
-    result = pd.DataFrame(result)
-    # result.rename(columns=lambda i: f"匹配{i + 1}", inplace=True)
-    result = pd.concat([result], axis=1)
-    result.head(30)
-    return result
+        result = []
+        for corpus in find_corpus.values:
+            sim = pd.Series(index[corpus])
+            print(sim.nlargest(1).values)
+            if sim.nlargest(1).values >= 0.75:
+                result.append(data.user[sim.nlargest(1).index].values)
+            else:
+                continue
+        result = pd.DataFrame(result)
+        # result.rename(columns=lambda i: f"匹配{i + 1}", inplace=True)
+        result = pd.concat([result], axis=1)
+        result.head(30)
+        return result
+    except:
+        return None

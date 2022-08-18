@@ -260,7 +260,7 @@ def __query_is_exist_by_name(condition: str, params: Tuple = ()) -> List[StoreBa
 
 def query_is_exist() -> []:
     r = []
-    sql = "select 门店经销商名称 from 门店拜访记录;"
+    sql = "select 门店经销商名称 from 门店拜访记录 where 门店经销商名称 != 'null';"
     params: Tuple = ()
     tuples = standard_query(sql, params)
     if tuples is None:
