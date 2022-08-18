@@ -345,7 +345,9 @@ def send_messages_two_day(userID, chatID, email, name, store):
 
 def confirm_address(address):
     data = query_is_exist()
+    print(data)
     find = str(address)
+    print(find)
     # 遍历该列表
     with open("mdjcxx.csv", 'r+', encoding='gbk') as user:
         user.write("user\n")
