@@ -355,10 +355,10 @@ def confirm_address(address):
             # 写入文件时增加换行符，保证每个元素位于一行
             user.write(str(i) + '\n')
     # 以append的方式不断写入到csv文件中
-    with open("output.csv", 'r+', encoding='gbk') as name:
+    with open("new.csv", 'r+', encoding='gbk') as name:
             # 写入文件时增加换行符，保证每个元素位于一行
         name.write('name\n')
-    with open("output.csv", 'r+', encoding='gbk') as name:
+    with open("new.csv", 'r+', encoding='gbk') as name:
             # 写入文件时增加换行符，保证每个元素位于一行
         name.write(str(find) + '\n')
     data = pd.read_csv("mdjcxx.csv", encoding="gbk",error_bad_lines=False)
