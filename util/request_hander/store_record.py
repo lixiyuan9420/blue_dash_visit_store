@@ -346,11 +346,13 @@ def send_messages_two_day(userID, chatID, email, name, store):
 def confirm_address(address):
     data = query_is_exist()
     find = address
+    data = pd.DataFrame(data)
+    find = pd.DataFrame(find)
     data_split_word = data.apply(jieba.lcut)
     dictionary = corpora.Dictionary(data_split_word.values)
     data_corpus = data_split_word.apply(dictionary.doc2bow)
     trantab = str.maketrans("0123456789", "零一二三四五六七八九")
-    find_corpus = find.name.apply(
+    find_corpus = find.apply(
         lambda x: dictionary.doc2bow(jieba.lcut(x.translate(trantab))))
 
     tfidf = models.TfidfModel(data_corpus.to_list())
@@ -360,9 +362,9 @@ def confirm_address(address):
     result = []
     for corpus in find_corpus.values:
         sim = pd.Series(index[corpus])
-        print(sim.nlargest(1).values)
+        # print(sim.nlargest(1).values)
         if sim.nlargest(1).values >= 0.75:
-            result.append(data.user[sim.nlargest(1).index].values)
+            result.append(data[sim.nlargest(1).index].values)
         else:
             continue
     result = pd.DataFrame(result)
