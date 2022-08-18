@@ -358,11 +358,11 @@ def confirm_address(address):
             # 遍历该列表
         for i in data:
             # 以append的方式不断写入到csv文件中
-            with open("mdjcxx.csv",'r+', encoding='utf8',errors='ignore') as user:
+            with open("mdjcxx.csv",'r+', encoding=u'utf8',errors='ignore') as user:
                 # 写入文件时增加换行符，保证每个元素位于一行
                 user.write(str(i) + '\n')
         for i in find:
-            with open("new.csv", 'r+', encoding='utf8',errors='ignore') as name:
+            with open("new.csv", 'r+', encoding=u'utf8',errors='ignore') as name:
                 # 写入文件时增加换行符，保证每个元素位于一行
                 name.write(str(i) + '\n')
         data = pd.read_csv("mdjcxx.csv")
