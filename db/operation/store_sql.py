@@ -24,7 +24,6 @@ condition_query_is_exist_phone = "where '门店/经销商电话' = %s"
 condition_query_is_exist_store_info = "where 门店名称 = %s"
 
 
-
 def insert_store_contract(store_record: StoreRecord) -> bool:
     """
     将一条新的门店拜访插入数据库中。会返回是否成功。
@@ -261,11 +260,11 @@ def __query_is_exist_by_name(condition: str, params: Tuple = ()) -> List[StoreBa
 
 def query_is_exist() -> []:
     r = []
-    sql = "select 门店经销商名称 from 门店拜访记录"
+    sql = "select 门店经销商名称 from 门店拜访记录;"
     params: Tuple = ()
     tuples = standard_query(sql, params)
     if tuples is None:
         raise ValueError("standard_query() returns None")
     for the_tuple in tuples:
-        r.append(*the_tuple[1:])
+        r.append(the_tuple)
     return r
