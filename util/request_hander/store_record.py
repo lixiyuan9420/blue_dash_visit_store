@@ -106,8 +106,9 @@ def __extract_store_record(data_json) -> StoreRecord:
     ip = ""
     if store_address != 'null':
         print(store_address)
-        print(confirm_add(store_address))
+        print("result" + str(confirm_add(store_address)))
         ip = confirm_add(store_address)['pois'][0]['location']
+        print("ip = "+str(ip))
     if store_address == 'null':
         ip = "null"
     # infoLogger.log("store   开始添加定时任务")
