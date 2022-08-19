@@ -20,6 +20,7 @@ def confirm_add(address):
     url = 'https://restapi.amap.com/v3/place/text?parameters'  # 高德地图地理编码API服务地址
     result = requests.get(url, para)  # GET方式请求
     result = result.json()
+
     return result
 
 
@@ -114,7 +115,7 @@ def __extract_store_record(data_json) -> StoreRecord:
     ip = ""
     if store_address != 'null':
         ip = confirm_add(store_address)
-        print("ip = "+str(ip))
+        # print("ip = "+str(ip))
     if store_address == 'null':
         ip = "null"
     # infoLogger.log("store   开始添加定时任务")
@@ -428,14 +429,3 @@ def confirm_address(address):
         return result
     else:
         return None
-
-
-def confirm_add(address):
-    para = {'key': '2f6d8c027b74979f34de9b25a4540c0d',  # 高德Key
-            'keywords': address}  # 地址参数
-    url = 'https://restapi.amap.com/v3/place/text?parameters'  # 高德地图地理编码API服务地址
-    result = requests.get(url, para)  # GET方式请求
-    result = result.json()
-    # lon_lat = result['geocodes'][0]['location']  # 获取返回参数geocodes中的location，即经纬度
-    print(result)
-    # return lon_lat
