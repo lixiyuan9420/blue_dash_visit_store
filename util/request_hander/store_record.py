@@ -10,7 +10,7 @@ from db.operation.store import StoreRecord
 from db.operation.store_sql import query_store_record_1, query_store_record, query_store_record_yesterday, \
     query_store_record_yesterday_1, query_store_record_two_day, query_store_record_two_day_1, \
     query_is_exist_by_store, query_is_exist_by_sale, query_is_exist_by_people, \
-    query_is_exist_by_address, query_is_exist_by_phone, query_is_exist
+    query_is_exist_by_address, query_is_exist_by_phone, query_is_exist, query_is_exist_by_ip
 from logger.logger import infoLogger, errLogger
 
 
@@ -54,26 +54,28 @@ def extract_store_is_exist(data_json):
     sale_people_is_exist = query_is_exist_by_people(sale_people)
     store_address_is_exist = query_is_exist_by_address(store_address)
     sale_address_is_exist = query_is_exist_by_address(sale_address)
+    store_ip_is_exist = []
+    sale_ip_is_exist = []
     exist = 0
     if store_address is not None:
         result = confirm_add(store_address)
-        store_address_is_exist = query_is_exist_by_address(store_address)
-        if len(store_address_is_exist) > 0:
-            if "商务" in result['pois'][0]['type']:
-                exist = exist + 0
-            else:
-                exist = exist + 1
-        elif len(store_address_is_exist) == 0:
-            exist = exist + 0
-    if sale_address is not None:
-        result = confirm_add(sale_address)
-        sale_address_is_exist = query_is_exist_by_address(sale_address)
-        if len(sale_address_is_exist) > 0:
+        store_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']))
+        if len(store_ip_is_exist) > 0:
             if "商务" in result['pois'][0]['type'] or "生活" in result['pois'][0]['type']:
                 exist = exist + 0
             else:
                 exist = exist + 1
-        elif len(sale_address_is_exist) == 0:
+        elif len(store_ip_is_exist) == 0:
+            exist = exist + 0
+    if sale_address is not None:
+        result = confirm_add(sale_address)
+        sale_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']))
+        if len(sale_ip_is_exist) > 0:
+            if "商务" in result['pois'][0]['type'] or "生活" in result['pois'][0]['type']:
+                exist = exist + 0
+            else:
+                exist = exist + 1
+        elif len(sale_ip_is_exist) == 0:
             exist = exist + 0
     store_phone_is_exist = query_is_exist_by_phone(store_phone)
     sale_phone_is_exist = query_is_exist_by_phone(sale_phone)
