@@ -54,8 +54,6 @@ def extract_store_is_exist(data_json):
     sale_people_is_exist = query_is_exist_by_people(sale_people)
     store_address_is_exist = query_is_exist_by_address(store_address)
     sale_address_is_exist = query_is_exist_by_address(sale_address)
-    store_ip_is_exist = []
-    sale_ip_is_exist = []
     exist = 0
     if store_address is not None:
         result = confirm_add(store_address)
