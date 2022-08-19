@@ -134,11 +134,14 @@ def __extract_store_record(data_json) -> StoreRecord:
 
 
 def confirm_add(address):
+    print(address)
     para = {'key': '2f6d8c027b74979f34de9b25a4540c0d',  # 高德Key
             'keywords': address}  # 地址参数
     url = 'https://restapi.amap.com/v3/place/text?parameters'  # 高德地图地理编码API服务地址
     result = requests.get(url, para)  # GET方式请求
+    print(result.json())
     result = result.json()
+    print(result)
     return result
 
 
