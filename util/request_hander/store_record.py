@@ -46,9 +46,25 @@ def extract_store_is_exist(data_json):
     sale_address_is_exist = query_is_exist_by_address(sale_address)
     exist = 0
     if store_address is not None:
-        exist = exist + len(confirm_address(store_address))
+        result = confirm_add(store_address)
+        store_address_is_exist = query_is_exist_by_address(store_address)
+        if len(store_address_is_exist) > 0:
+            if "商务" in result['pois'][0]['type']:
+                exist = exist + 0
+            else:
+                exist = exist + 1
+        elif len(store_address_is_exist) == 0:
+            exist = exist + 0
     if sale_address is not None:
-        exist = exist + len(confirm_address(sale_address))
+        result = confirm_add(sale_address)
+        sale_address_is_exist = query_is_exist_by_address(sale_address)
+        if len(sale_address_is_exist) > 0:
+            if "商务" in result['pois'][0]['type']:
+                exist = exist + 0
+            else:
+                exist = exist + 1
+        elif len(sale_address_is_exist) == 0:
+            exist = exist + 0
     store_phone_is_exist = query_is_exist_by_phone(store_phone)
     sale_phone_is_exist = query_is_exist_by_phone(sale_phone)
     is_exist = 0
@@ -86,6 +102,12 @@ def __extract_store_record(data_json) -> StoreRecord:
         time = '0001-01-01'
     if next_time == 'null':
         next_time = '0001-01-01'
+    ip = ""
+    if store_name != 'null':
+        ips = confirm_add(store_name)
+        ip = ips["pois"][0]['location']
+    if store_name == 'null':
+        ip = ""
     # infoLogger.log("store   开始添加定时任务")
     # if book_time != '0001-01-01':
     #     infoLogger.log("添加任务  预约拜访时间"+str(book_time))
@@ -105,7 +127,17 @@ def __extract_store_record(data_json) -> StoreRecord:
     #     infoLogger.log("添加"+str(next_time)+"任务已完成")
     return StoreRecord(is_book, book_time, sale_id, goal, store, sales, store_name,
                        store_phone_name, store_phone, store_address, time, result,
-                       next_time, part, sale_name)
+                       next_time, part, sale_name, ip)
+
+
+def confirm_add(address):
+    para = {'key': '2f6d8c027b74979f34de9b25a4540c0d',  # 高德Key
+            'keywords': address}  # 地址参数
+    url = 'https://restapi.amap.com/v3/place/text?parameters'  # 高德地图地理编码API服务地址
+    result = requests.get(url, para)  # GET方式请求
+    result = result.json()
+    lon_lat = result['pois'][0]['location']  # 获取返回参数geocodes中的location，即经纬度  121.477656,31.234557
+    return result
 
 
 def send_message_total():
@@ -397,3 +429,14 @@ def confirm_address(address):
         return result
     else:
         return None
+
+
+def confirm_add(address):
+    para = {'key': '2f6d8c027b74979f34de9b25a4540c0d',  # 高德Key
+            'keywords': address}  # 地址参数
+    url = 'https://restapi.amap.com/v3/place/text?parameters'  # 高德地图地理编码API服务地址
+    result = requests.get(url, para)  # GET方式请求
+    result = result.json()
+    # lon_lat = result['geocodes'][0]['location']  # 获取返回参数geocodes中的location，即经纬度
+    print(result)
+    # return lon_lat

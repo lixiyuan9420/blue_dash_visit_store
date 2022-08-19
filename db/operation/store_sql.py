@@ -5,8 +5,8 @@ from db.operation.store_info import StoreBasicInfo
 from db.standard import standard_update, standard_query
 
 insertion_store_record = "insert into 门店拜访记录(是否预约,预约日期,销售编号,拜访目的,`门店`,`经销商`,`门店经销商名称`,`门店/经销商联系人名称`," \
-                         "`门店/经销商电话`,`门店/经销商地址`,拜访日期,拜访结果,下次拜访日期,部门,成员) " \
-                         "values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                         "`门店/经销商电话`,`门店/经销商地址`,拜访日期,拜访结果,下次拜访日期,部门,成员,经纬度) " \
+                         "values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 query_store_record_prefix = "select * from 门店拜访记录"
 query_store_belong_prefix = "select * from 门店基础信息"
 condition_query_store_record = "where to_days(预约日期)=to_days(now()) and 是否预约='是';"

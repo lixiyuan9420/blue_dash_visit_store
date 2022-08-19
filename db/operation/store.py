@@ -14,7 +14,8 @@
 #         `拜访结果` varchar(255),
 #         `下次拜访日期` Date,
 #         `部门` varchar(20),
-#         `成员` varchar(20)
+#         `成员` varchar(20),
+#         `经纬度` varchar(50)
 #     );
 from typing import Tuple
 
@@ -41,12 +42,13 @@ class StoreRecord:
         next_time:下次拜访日期
         part:部门
         sale_name:成员
+        ip:经纬度
 
     """
 
     def __init__(self, is_book: str, book_time: Date, sale_id: str, goal: str,
                  store: str, sales: str, store_name: str, store_phone_name: str, store_phone: str,
-                 store_address: str, time: Date, result: str, next_time: Date, part: str, sale_name: str,
+                 store_address: str, time: Date, result: str, next_time: Date, part: str, sale_name: str, ip: str,
                  data_id: int = -1):
         """
 
@@ -83,6 +85,7 @@ class StoreRecord:
         self.next_time = next_time
         self.part = part
         self.sale_name = sale_name
+        self.ip = ip
         self.data_id = data_id
 
     def generate_tuple(self) -> Tuple:
@@ -92,4 +95,4 @@ class StoreRecord:
         """
         return (self.is_book, self.book_time, self.sale_id, self.goal, self.store, self.sales, self.store_name,
                 self.store_phone_name,
-                self.store_phone, self.store_address, self.time, self.result, self.next_time, self.part, self.sale_name)
+                self.store_phone, self.store_address, self.time, self.result, self.next_time, self.part, self.sale_name,self.ip)

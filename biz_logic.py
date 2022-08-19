@@ -75,7 +75,7 @@ def mock_verification() -> flask.wrappers.Response:
 @bp.route("/store/new_store_record", methods=["POST"])
 def new_store_contract() -> flask.wrappers.Response:
     """
-    插入一个新的门店合同。
+    插入一个新的门店拜访记录。
 
     :return: flask.wrappers.Response:
     """
