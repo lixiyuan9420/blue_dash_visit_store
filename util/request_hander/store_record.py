@@ -96,7 +96,6 @@ def __extract_store_record(data_json) -> StoreRecord:
     next_time = data["下次拜访日期"]
     part = data["部门"]
     sale_name = data["成员"]
-    print(data)
     if book_time == 'null':
         book_time = '0001-01-01'
     if time == 'null':
@@ -105,7 +104,7 @@ def __extract_store_record(data_json) -> StoreRecord:
         next_time = '0001-01-01'
     ip = ""
     if store_address != 'null':
-        ip = confirm_add(store_address)
+        confirm_add(store_address)
         print("ip = "+str(ip))
     if store_address == 'null':
         ip = "null"
