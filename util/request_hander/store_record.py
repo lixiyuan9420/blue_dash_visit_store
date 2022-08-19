@@ -105,6 +105,7 @@ def __extract_store_record(data_json) -> StoreRecord:
         next_time = '0001-01-01'
     ip = ""
     if store_address != 'null':
+        print(store_address)
         print(confirm_add(store_address))
         ip = confirm_add(store_address)['pois'][0]['location']
     if store_address == 'null':
