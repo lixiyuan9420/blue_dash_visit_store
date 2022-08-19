@@ -47,17 +47,17 @@ def extract_store_is_exist(data_json):
     sale_phone = data["经销商电话"]
     store_address = data["门店地址"]
     sale_address = data["经销商地址"]
-    store_is_exist = query_is_exist_by_store(store)
-    sale_is_exist = query_is_exist_by_sale(sale)
+    store_is_exist = query_is_exist_by_store(store,member)
+    sale_is_exist = query_is_exist_by_sale(sale,member)
     # sale_is_exist = []
     store_people_is_exist = query_is_exist_by_people(store_people)
     sale_people_is_exist = query_is_exist_by_people(sale_people)
-    store_address_is_exist = query_is_exist_by_address(store_address)
-    sale_address_is_exist = query_is_exist_by_address(sale_address)
+    store_address_is_exist = query_is_exist_by_address(store_address,member)
+    sale_address_is_exist = query_is_exist_by_address(sale_address,member)
     exist = 0
     if store_address is not None:
         result = confirm_add(store_address)
-        store_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']))
+        store_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']),member)
         if len(store_ip_is_exist) > 0:
             if "商务" in result['pois'][0]['type'] or "生活" in result['pois'][0]['type']:
                 exist = exist + 0
@@ -67,7 +67,7 @@ def extract_store_is_exist(data_json):
             exist = exist + 0
     if sale_address is not None:
         result = confirm_add(sale_address)
-        sale_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']))
+        sale_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']),member)
         if len(sale_ip_is_exist) > 0:
             if "商务" in result['pois'][0]['type'] or "生活" in result['pois'][0]['type']:
                 exist = exist + 0

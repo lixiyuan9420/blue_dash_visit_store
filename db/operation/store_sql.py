@@ -15,14 +15,14 @@ condition_query_store_record_yesterday = "where to_days(now())-to_days(预约日
 condition_query_store_record_yesterday_1 = "where to_days(now())-to_days(下次拜访日期)=1"
 condition_query_store_record_two_day = "where to_days(now())-to_days(预约日期) = 2"
 condition_query_store_record_two_day_1 = "where to_days(now())-to_days(下次拜访日期)=2"
-condition_query_is_exist_after = "where 门店经销商名称 = %s"
-condition_query_is_exist_store = "where 门店 = %s"
-condition_query_is_exist_sale = "where 经销商 = %s"
-condition_query_is_exist_people = "where '门店/经销商联系人' = %s"
-condition_query_is_exist_address = "where '门店/经销商地址' = %s"
-condition_query_is_exist_phone = "where '门店/经销商电话' = %s"
-condition_query_is_exist_store_info = "where 门店名称 = %s"
-condition_query_is_exist_ip = "where 经纬度 = %s"
+condition_query_is_exist_after = "where 门店经销商名称 = %s and 成员 != %s "
+condition_query_is_exist_store = "where 门店 = %s and 成员 != %s"
+condition_query_is_exist_sale = "where 经销商 = %s and 成员 != %s"
+condition_query_is_exist_people = "where '门店/经销商联系人' = %s "
+condition_query_is_exist_address = "where '门店/经销商地址' = %s and 成员!= %s"
+condition_query_is_exist_phone = "where '门店/经销商电话' = %s "
+condition_query_is_exist_store_info = "where 门店名称 = %s "
+condition_query_is_exist_ip = "where 经纬度 = %s and 成员 != %s"
 
 
 def insert_store_contract(store_record: StoreRecord) -> bool:
@@ -191,7 +191,7 @@ def query_store_record_two_day_1() -> List[StoreRecord]:
     return __query_store_record(condition_query_store_record_yesterday_1, ())
 
 
-def query_is_exist_by_store(store):
+def query_is_exist_by_store(store,member):
     """
      查询是否存在
      :return:
@@ -200,31 +200,31 @@ def query_is_exist_by_store(store):
         new_store = store[len(store) - 3:len(store)]
     else:
         new_store = store
-    return __query_is_exist(condition_query_is_exist_after, (new_store,))
+    return __query_is_exist(condition_query_is_exist_after, (new_store,member))
 
 
-def query_is_exist_by_sale(sale):
+def query_is_exist_by_sale(sale,member):
     if sale is not None:
         new_sale = sale[len(sale) - 3:len(sale)]
     else:
         new_sale = sale
-    return __query_is_exist(condition_query_is_exist_after, (new_sale,))
+    return __query_is_exist(condition_query_is_exist_after, (new_sale,member))
 
 
 def query_is_exist_by_people(sale_store):
     return __query_is_exist(condition_query_is_exist_people, (sale_store,))
 
 
-def query_is_exist_by_address(address):
+def query_is_exist_by_address(address,member):
     if address is not None:
         new_address = address[len(address)-3:len(address)]
     else:
         new_address = address
-    return __query_is_exist(condition_query_is_exist_address, (new_address,))
+    return __query_is_exist(condition_query_is_exist_address, (new_address,member))
 
 
-def query_is_exist_by_ip(ip):
-    return __query_is_exist(condition_query_is_exist_ip, (ip,))
+def query_is_exist_by_ip(ip,member):
+    return __query_is_exist(condition_query_is_exist_ip, (ip,member))
 
 
 def query_is_exist_by_phone(phone):
