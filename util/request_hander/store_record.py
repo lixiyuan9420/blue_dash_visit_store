@@ -82,6 +82,7 @@ def extract_store_is_exist(data_json):
     print(len(sale_is_exist))
     print(len(store_address_is_exist))
     print(len(sale_address_is_exist))
+    print(exist)
     if len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist) + exist > 0:
         is_exist = len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist)+exist
     return is_exist
