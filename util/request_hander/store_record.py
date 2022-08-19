@@ -365,8 +365,8 @@ def confirm_address(address):
             with open("new.csv", 'r+', encoding=u'utf8',errors='ignore') as name:
                 # 写入文件时增加换行符，保证每个元素位于一行
                 name.write(str(i) + '\n')
-        data = pd.read_csv("mdjcxx.csv",encoding=u'utf8')
-        find = pd.read_csv("new.csv",encoding=u'utf8')
+        data = pd.read_csv(r"mdjcxx.csv",encoding=u'utf-8')
+        find = pd.read_csv(r"new.csv",encoding=u'utf-8')
         data_split_word = data.user.apply(jieba.lcut)
         dictionary = corpora.Dictionary(data_split_word.values)
         data_corpus = data_split_word.apply(dictionary.doc2bow)
