@@ -78,7 +78,10 @@ def extract_store_is_exist(data_json):
     store_phone_is_exist = query_is_exist_by_phone(store_phone)
     sale_phone_is_exist = query_is_exist_by_phone(sale_phone)
     is_exist = 0
-
+    print(len(store_is_exist))
+    print(len(sale_is_exist))
+    print(len(store_address_is_exist))
+    print(len(sale_address_is_exist))
     if len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist) + exist > 0:
         is_exist = len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist)+exist
     return is_exist
@@ -114,7 +117,7 @@ def __extract_store_record(data_json) -> StoreRecord:
         next_time = '0001-01-01'
     ip = ""
     if store_address != 'null':
-        ip = confirm_add(store_address)['pois'][0]['location']
+        ip = str(confirm_add(store_address)['pois'][0]['location'])
         # print("ip = "+str(ip))
     if store_address == 'null':
         ip = "null"

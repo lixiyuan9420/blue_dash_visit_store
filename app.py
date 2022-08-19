@@ -7,7 +7,7 @@ import biz_logic
 
 # 创建一个Flask app对象
 from init import scheduler
-from util.request_hander.store_record import send_message_book, send_message_total, confirm_address
+from util.request_hander.store_record import send_message_book, send_message_total
 
 app = Flask(__name__)
 
