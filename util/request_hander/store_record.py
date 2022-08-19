@@ -96,6 +96,7 @@ def __extract_store_record(data_json) -> StoreRecord:
     next_time = data["下次拜访日期"]
     part = data["部门"]
     sale_name = data["成员"]
+    print(data)
     if book_time == 'null':
         book_time = '0001-01-01'
     if time == 'null':
@@ -105,9 +106,9 @@ def __extract_store_record(data_json) -> StoreRecord:
     ip = ""
     if store_name != 'null':
         ips = confirm_add(store_name)
-        ip = ips["pois"][0]['location']
+        ip = ips['pois'][0]['location']
     if store_name == 'null':
-        ip = ""
+        ip = "null"
     # infoLogger.log("store   开始添加定时任务")
     # if book_time != '0001-01-01':
     #     infoLogger.log("添加任务  预约拜访时间"+str(book_time))
@@ -136,7 +137,6 @@ def confirm_add(address):
     url = 'https://restapi.amap.com/v3/place/text?parameters'  # 高德地图地理编码API服务地址
     result = requests.get(url, para)  # GET方式请求
     result = result.json()
-    lon_lat = result['pois'][0]['location']  # 获取返回参数geocodes中的location，即经纬度  121.477656,31.234557
     return result
 
 
