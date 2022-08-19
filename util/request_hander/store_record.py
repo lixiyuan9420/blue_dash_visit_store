@@ -14,6 +14,15 @@ from db.operation.store_sql import query_store_record_1, query_store_record, que
 from logger.logger import infoLogger, errLogger
 
 
+def confirm_add(address):
+    para = {'key': '2f6d8c027b74979f34de9b25a4540c0d',  # 高德Key
+            'keywords': address}  # 地址参数
+    url = 'https://restapi.amap.com/v3/place/text?parameters'  # 高德地图地理编码API服务地址
+    result = requests.get(url, para)  # GET方式请求
+    result = result.json()
+    return result
+
+
 def extract_store_is_exist(data_json):
     # {
     #
@@ -104,7 +113,7 @@ def __extract_store_record(data_json) -> StoreRecord:
         next_time = '0001-01-01'
     ip = ""
     if store_address != 'null':
-        confirm_add(store_address)
+        ip = confirm_add(store_address)
         print("ip = "+str(ip))
     if store_address == 'null':
         ip = "null"
@@ -128,15 +137,6 @@ def __extract_store_record(data_json) -> StoreRecord:
     return StoreRecord(is_book, book_time, sale_id, goal, store, sales, store_name,
                        store_phone_name, store_phone, store_address, time, result,
                        next_time, part, sale_name, ip)
-
-
-def confirm_add(address):
-    para = {'key': '2f6d8c027b74979f34de9b25a4540c0d',  # 高德Key
-            'keywords': address}  # 地址参数
-    url = 'https://restapi.amap.com/v3/place/text?parameters'  # 高德地图地理编码API服务地址
-    result = requests.get(url, para)  # GET方式请求
-    result = result.json()
-    return result
 
 
 def send_message_total():
