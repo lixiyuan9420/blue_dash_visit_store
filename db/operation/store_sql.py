@@ -22,7 +22,7 @@ condition_query_is_exist_people = "where '门店/经销商联系人' = %s "
 condition_query_is_exist_address = "where '门店/经销商地址' = %s and 成员!= %s"
 condition_query_is_exist_phone = "where '门店/经销商电话' = %s "
 condition_query_is_exist_store_info = "where 门店名称 = %s "
-condition_query_is_exist_ip = "where 经纬度 = %s and 成员 != %s"
+condition_query_is_exist_ip = "where 经纬度 = '%s' and 成员 != %s"
 
 
 def insert_store_contract(store_record: StoreRecord) -> bool:
