@@ -104,10 +104,9 @@ def __extract_store_record(data_json) -> StoreRecord:
     if next_time == 'null':
         next_time = '0001-01-01'
     ip = ""
-    if store_name != 'null':
-        ips = confirm_add(store_name)
-        ip = ips['pois'][0]['location']
-    if store_name == 'null':
+    if store_address != 'null':
+        ip = confirm_add(store_address)['pois'][0]['location']
+    if store_address == 'null':
         ip = "null"
     # infoLogger.log("store   开始添加定时任务")
     # if book_time != '0001-01-01':
