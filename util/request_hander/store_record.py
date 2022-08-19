@@ -59,30 +59,19 @@ def extract_store_is_exist(data_json):
         result = confirm_add(store_address)
         store_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']),member)
         if len(store_ip_is_exist) > 0:
-            if "商务" in result['pois'][0]['type'] or "生活" in result['pois'][0]['type']:
-                exist = exist + 0
-            else:
-                exist = exist + 1
+                exist = exist + len(store_ip_is_exist)
         elif len(store_ip_is_exist) == 0:
             exist = exist + 0
     if sale_address is not None:
         result = confirm_add(sale_address)
         sale_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']),member)
         if len(sale_ip_is_exist) > 0:
-            if "商务" in result['pois'][0]['type'] or "生活" in result['pois'][0]['type']:
-                exist = exist + 0
-            else:
-                exist = exist + 1
+                exist = exist + len(sale_ip_is_exist)
         elif len(sale_ip_is_exist) == 0:
             exist = exist + 0
     store_phone_is_exist = query_is_exist_by_phone(store_phone)
     sale_phone_is_exist = query_is_exist_by_phone(sale_phone)
     is_exist = 0
-    print(len(store_is_exist))
-    print(len(sale_is_exist))
-    print(len(store_address_is_exist))
-    print(len(sale_address_is_exist))
-    print(exist)
     if len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist) + exist > 0:
         is_exist = len(store_is_exist) + len(sale_is_exist) + len(store_address_is_exist) + len(sale_address_is_exist)+exist
     return is_exist
