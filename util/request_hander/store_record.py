@@ -56,7 +56,7 @@ def extract_store_is_exist(data_json):
     sale_address_is_exist = query_is_exist_by_address(sale_address,member)
     exist = 0
     if store_address is not None:
-        result = confirm_add(store_address)
+        result = confirm_add(str(store_address)+str(store))
         store_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']),member)
         print(len(store_ip_is_exist))
         if len(store_ip_is_exist) > 0:
@@ -64,7 +64,7 @@ def extract_store_is_exist(data_json):
         elif len(store_ip_is_exist) == 0:
             exist = exist + 0
     if sale_address is not None:
-        result = confirm_add(sale_address)
+        result = confirm_add(str(sale_address)+str(sale))
         sale_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']),member)
         print(len(sale_ip_is_exist))
         if len(sale_ip_is_exist) > 0:
