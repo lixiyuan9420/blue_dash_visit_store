@@ -70,6 +70,10 @@ def extract_store_is_exist(data_json):
             exist = exist + 0
     if sale_address is not None:
         result = confirm_add(str(sale_address)+str(sale))
+        new_sale_address = str(sale_address) + str(sale)
+        area = cpca.transform([new_sale_address, ]).values.tolist()[0][2]
+        if area != result['pois'][0]['adname']:
+            return -1
         sale_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']),member)
         print(len(sale_ip_is_exist))
         if len(sale_ip_is_exist) > 0:
