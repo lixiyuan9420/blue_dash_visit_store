@@ -1,5 +1,6 @@
 import json
 
+import cpca
 import jieba
 import pandas as pd
 import requests
@@ -57,6 +58,10 @@ def extract_store_is_exist(data_json):
     exist = 0
     if store_address is not None:
         result = confirm_add(str(store_address)+str(store))
+        new_store_address = str(store_address)+str(store)
+        area = cpca.transform([new_store_address, ]).values.tolist()[0][2]
+        if area != result['pois'][0]['adname']:
+            return -1
         store_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']),member)
         print(len(store_ip_is_exist))
         if len(store_ip_is_exist) > 0:

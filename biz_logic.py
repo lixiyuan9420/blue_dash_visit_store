@@ -105,8 +105,10 @@ def query_is_exist_api() -> flask.wrappers.Response:
         infoLogger.log("/store/query_is_exist success: " + str(record), line_below=True)
         if record == 0:
             return response_with_msg("没有归属任何销售")
-        elif record != 0:
+        elif record > 0:
             return response_with_msg("有销售正在跟进")
+        elif record == -1:
+            return response_with_msg("地址错误请检查地址")
     except Exception as e:
         __log_err(e, request)
         return response_failure()
