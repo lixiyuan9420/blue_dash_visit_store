@@ -64,10 +64,15 @@ def extract_store_is_exist(data_json):
             return -1
         store_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']),member)
         print(len(store_ip_is_exist))
-        if len(store_ip_is_exist) > 0:
-                exist = exist + len(store_ip_is_exist)
-        elif len(store_ip_is_exist) == 0:
+        if len(store_ip_is_exist) > 0 and len(store_is_exist) > 0:
+            exist = exist + len(store_ip_is_exist)
+        # 经纬度地址存在，店名不同
+        elif len(store_ip_is_exist) > 0 and len(store_is_exist) == 0:
             exist = exist + 0
+        # 经纬度地址不存在，店名不存在
+        elif len(store_ip_is_exist) == 0 and len(store_is_exist) == 0:
+            exist = exist + 0
+
     if sale_address is not None:
         result = confirm_add(str(sale_address)+str(sale))
         new_sale_address = str(sale_address) + str(sale)
@@ -76,9 +81,14 @@ def extract_store_is_exist(data_json):
             return -1
         sale_ip_is_exist = query_is_exist_by_ip(str(result['pois'][0]['location']),member)
         print(len(sale_ip_is_exist))
-        if len(sale_ip_is_exist) > 0:
+        # 经纬度地址存在，店名相同
+        if len(sale_ip_is_exist) > 0 and len(sale_is_exist) > 0:
                 exist = exist + len(sale_ip_is_exist)
-        elif len(sale_ip_is_exist) == 0:
+        # 经纬度地址存在，店名不同
+        elif len(sale_ip_is_exist) > 0 and len(sale_is_exist) == 0:
+            exist = exist + 0
+        # 经纬度地址不存在，店名不存在
+        elif len(sale_ip_is_exist) == 0 and len(sale_is_exist) == 0:
             exist = exist + 0
     store_phone_is_exist = query_is_exist_by_phone(store_phone)
     sale_phone_is_exist = query_is_exist_by_phone(sale_phone)
