@@ -47,6 +47,10 @@ def extract_store_is_exist(data_json):
     sale_phone = data["经销商电话"]
     store_address = data["门店地址"]
     sale_address = data["经销商地址"]
+    print(store)
+    print(sale)
+    print(store_address)
+    print(sale_address)
     store_is_exist = query_is_exist_by_store(store,member)
     sale_is_exist = query_is_exist_by_sale(sale,member)
     # sale_is_exist = []
